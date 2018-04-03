@@ -1,0 +1,90 @@
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\Final_Project.Android.dll
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\Final_Project.Android.pdb
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\com.companyname.Final_Project.apk
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\com.companyname.Final_Project-Signed.apk
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\Final_Project.Android.csproj.CoreCompileInputs.cache
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\Final_Project.Droid.App.xaml.g.cs
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\Final_Project.Droid.Visual.MainPage.xaml.g.cs
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\Final_Project.Droid.Visual.New_Project.xaml.g.cs
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\Final_Project.Droid.Visual.Project_View_Page.xaml.g.cs
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\Final_Project.Droid.Visual.SessionLive.xaml.g.cs
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\Final_Project.Droid.Visual.View_Sessions.xaml.g.cs
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\Final_Project.Android.dll
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\Final_Project.Android.pdb
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\bin\com.companyname.Final_Project.apk
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\res\drawable\icon.png
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\res\drawable-hdpi\icon.png
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\res\drawable-xhdpi\icon.png
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\res\drawable-xxhdpi\icon.png
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\res\layout\tabbar.xml
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\res\layout\toolbar.xml
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\res\values\styles.xml
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\R.cs.flag
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\uploadflags.txt
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\Final_Project.Android.dll.mdb
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\FormsViewGroup.dll.mdb
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\Plugin.Geolocator.dll.mdb
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\Plugin.Permissions.dll.mdb
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\SQLiteNetExtensions.dll.mdb
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\Xamarin.Forms.Core.dll.mdb
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\Xamarin.Forms.Platform.Android.dll.mdb
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\Xamarin.Forms.Xaml.dll.mdb
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Final_Project.Android.dll.mdb
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\FormsViewGroup.dll.mdb
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Plugin.Geolocator.dll.mdb
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Plugin.Permissions.dll.mdb
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\SQLiteNetExtensions.dll.mdb
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Xamarin.Forms.Core.dll.mdb
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Xamarin.Forms.Platform.Android.dll.mdb
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Xamarin.Forms.Xaml.dll.mdb
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\Final_Project.Android.csprojResolveAssemblyReference.cache
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\XbdMerge\Xamarin.GooglePlayServices.Basement.dll
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\XbdMerge\Xamarin.GooglePlayServices.Tasks.dll
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\XbdMerge\Xamarin.GooglePlayServices.Base.dll
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\XbdMerge\Xamarin.GooglePlayServices.Maps.dll
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\Final_Project.Android.dll
+bin\Debug\FormsViewGroup.dll.mdb
+bin\Debug\Plugin.Geolocator.dll.mdb
+bin\Debug\Plugin.Permissions.dll.mdb
+bin\Debug\SQLiteNetExtensions.dll.mdb
+bin\Debug\Xamarin.Forms.Core.dll.mdb
+bin\Debug\Xamarin.Forms.Platform.Android.dll.mdb
+bin\Debug\Xamarin.Forms.Xaml.dll.mdb
+bin\Debug\Mono.Android.pdb
+bin\Debug\mscorlib.pdb
+bin\Debug\Plugin.Geolocator.Abstractions.pdb
+bin\Debug\Plugin.Permissions.Abstractions.pdb
+bin\Debug\SQLite-net.pdb
+bin\Debug\System.Core.pdb
+bin\Debug\System.pdb
+bin\Debug\System.Xml.pdb
+bin\Debug\System.Xml.Linq.pdb
+bin\Debug\System.Net.Http.pdb
+bin\Debug\System.Runtime.Serialization.pdb
+bin\Debug\System.ServiceModel.Internals.pdb
+bin\Debug\Microsoft.CSharp.pdb
+bin\Debug\Mono.Security.pdb
+bin\Debug\System.ComponentModel.Composition.pdb
+obj\Debug\linksrc\Final_Project.Android.dll.mdb
+obj\Debug\linksrc\FormsViewGroup.dll.mdb
+obj\Debug\linksrc\Plugin.Geolocator.dll.mdb
+obj\Debug\linksrc\Plugin.Permissions.dll.mdb
+obj\Debug\linksrc\SQLiteNetExtensions.dll.mdb
+obj\Debug\linksrc\Xamarin.Forms.Core.dll.mdb
+obj\Debug\linksrc\Xamarin.Forms.Platform.Android.dll.mdb
+obj\Debug\linksrc\Xamarin.Forms.Xaml.dll.mdb
+obj\Debug\linksrc\Mono.Android.pdb
+obj\Debug\linksrc\mscorlib.pdb
+obj\Debug\linksrc\Plugin.Geolocator.Abstractions.pdb
+obj\Debug\linksrc\Plugin.Permissions.Abstractions.pdb
+obj\Debug\linksrc\SQLite-net.pdb
+obj\Debug\linksrc\System.Core.pdb
+obj\Debug\linksrc\System.pdb
+obj\Debug\linksrc\System.Xml.pdb
+obj\Debug\linksrc\System.Xml.Linq.pdb
+obj\Debug\linksrc\System.Net.Http.pdb
+obj\Debug\linksrc\System.Runtime.Serialization.pdb
+obj\Debug\linksrc\System.ServiceModel.Internals.pdb
+obj\Debug\linksrc\Microsoft.CSharp.pdb
+obj\Debug\linksrc\Mono.Security.pdb
+obj\Debug\linksrc\System.ComponentModel.Composition.pdb

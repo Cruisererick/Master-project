@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Final_Project.Visual.Project_View_Page">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+		</Grid.RowDefinitions>
+
+		<StackLayout Grid.Row="1">
+			<Label x:Name="Project_Name" BackgroundColor="AliceBlue"  TextColor="Black" FontSize = "25" Text="Name: " FontAttributes="Italic"/>
+			<Label x:Name="Project_Description" BackgroundColor="AliceBlue"  TextColor="Black" FontSize = "25" Text="Description: " FontAttributes="Italic"/>
+			<Label x:Name="Estimation_Time" BackgroundColor="AliceBlue"  TextColor="Black" FontSize = "25" Text="Estimation: " FontAttributes="Italic"/>
+			<Label x:Name="Engage_Time" BackgroundColor="AliceBlue"  TextColor="Black" FontSize = "25" Text="Time spend: " FontAttributes="Italic"/>
+		</StackLayout>
+		<StackLayout Grid.Row="2">
+			<ContentView x:Name="overlay"
+               AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+               AbsoluteLayout.LayoutFlags="All"
+               IsVisible="False"
+               BackgroundColor="#C0808080"
+               Padding="10, 0">
+				<!-- Overlay -->
+
+				<StackLayout Orientation="Vertical"
+				 BackgroundColor="White"
+				 HeightRequest="300"
+				 WidthRequest="300"
+				 HorizontalOptions="Center"
+				 VerticalOptions="Start"
+				 Margin="0,20,0,0" >
+
+				<Label x:Name="Name"
+				 BackgroundColor="AliceBlue"
+				 FontSize="18"
+				 TextColor="Black"
+				 HorizontalOptions="Fill"
+				 Text="Name: " FontAttributes="Italic"/>
+
+				<Label x:Name="Decription"
+				 BackgroundColor="AliceBlue"
+				 FontSize="18"
+				 TextColor="Black"
+				 HorizontalOptions="Fill"
+				 Text="Description: " FontAttributes="Italic"/>
+
+				<Label x:Name="Estimation"
+				 BackgroundColor="AliceBlue"
+				 FontSize="18"
+				 TextColor="Black"
+				 HorizontalOptions="Fill"
+				 Text="Estimation: " FontAttributes="Italic"/>
+
+					<StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+						<Button Text="Cancel"
+						VerticalOptions="CenterAndExpand"
+						HorizontalOptions="Center"
+						Clicked="OnCancelButtonClicked"  FontAttributes="Italic" FontSize="20" BackgroundColor="AliceBlue"/>
+
+						<Button Text="New Session"
+						VerticalOptions="CenterAndExpand"
+						HorizontalOptions="Center"
+						Clicked="NewSessionButtonClicked"  FontAttributes="Italic" FontSize="20" BackgroundColor="AliceBlue"/>
+					</StackLayout>
+					
+					<StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+						<Button Text="View Sessions"
+						VerticalOptions="CenterAndExpand"
+						HorizontalOptions="Center"
+						Clicked="ViewTaskSessionsClick"  FontAttributes="Italic" FontSize="20" BackgroundColor="AliceBlue"/>
+					</StackLayout>
+				</StackLayout>
+			</ContentView>
+			<ListView x:Name="Tasks_List" SeparatorColor="Black" BackgroundColor="AliceBlue" RowHeight="50">
+			</ListView>
+			<StackLayout Orientation="Horizontal"  HorizontalOptions="FillAndExpand">
+				<StackLayout Orientation="Vertical"  HorizontalOptions="FillAndExpand">
+					<Button x:Name="View_Sessions" Clicked="ViewSessionsClick" Text="Sessions" FontAttributes="Italic" FontSize="20" BackgroundColor="AliceBlue"></Button>
+				</StackLayout>
+				<StackLayout Orientation="Vertical"  HorizontalOptions="FillAndExpand">
+					<Button x:Name="Delete_Project" Text="Delete" FontAttributes="Italic" FontSize="20" BackgroundColor="AliceBlue"></Button>
+				</StackLayout>
+				<Button x:Name="Resume_Session" Clicked="Resume_Click" Text="Back to Session" IsVisible="False" FontAttributes="Italic" FontSize="20" BackgroundColor="AliceBlue"></Button>
+			</StackLayout>
+		</StackLayout>
+	</Grid>
+</ContentPage>

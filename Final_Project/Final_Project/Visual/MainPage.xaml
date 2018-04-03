@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Final_Project"
+             x:Class="Final_Project.MainPage">
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"></RowDefinition>
+		</Grid.RowDefinitions>
+
+		<StackLayout Grid.Row="0">
+			<ListView x:Name="Proyects" SeparatorColor="Black" BackgroundColor="AliceBlue" RowHeight="50">
+			</ListView>
+			<Button x:Name="Resume_Session" Clicked="Resume_Click" Text="Resume Session" IsVisible="False" FontAttributes="Italic" FontSize="20" BackgroundColor="AliceBlue"></Button>
+			<Button x:Name="New_Project" Clicked="Button_Click" Text="New Project" FontAttributes="Italic" FontSize="20" BackgroundColor="AliceBlue"></Button>
+		</StackLayout>
+	</Grid>
+
+</ContentPage>
