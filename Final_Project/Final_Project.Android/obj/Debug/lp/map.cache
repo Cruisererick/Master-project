@@ -1,3 +1,4 @@
+ExifLib
 FormsViewGroup
 Newtonsoft.Json
 Plugin.CurrentActivity
@@ -38,6 +39,13 @@ Xamarin.Forms.Maps
 Xamarin.Forms.Platform.Android
 Xamarin.Forms.Platform
 Xamarin.Forms.Xaml
+XLabs.Core
+XLabs.Forms
+XLabs.Forms.Droid
+XLabs.Ioc
+XLabs.Platform
+XLabs.Platform.Droid
+XLabs.Serialization
 Xamarin.GooglePlayServices.Basement
 Xamarin.GooglePlayServices.Tasks
 Xamarin.GooglePlayServices.Base

@@ -108,10 +108,9 @@ namespace Final_Project
 			}
 		}
 
-		private void askLocation()
+		private async void askLocation()
 		{
-			Task.Run(() =>
-			{
+			await Task.Delay(10).ContinueWith(async (arg) => {
 				Task.Delay(10000).Wait();
 				while (getlocation)
 				{

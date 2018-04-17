@@ -12,4 +12,5 @@
   <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
   <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
   <uses-permission android:name="android.permission.INTERNET" />
+  <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true" />
 </manifest>

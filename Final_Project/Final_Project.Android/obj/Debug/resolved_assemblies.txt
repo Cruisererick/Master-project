@@ -1,7 +1,9 @@
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Final_Project.Android.dll
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\ExifLib.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\FormsViewGroup.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Java.Interop.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Mono.Android.dll
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Mono.Android.Export.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\mscorlib.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Newtonsoft.Json.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Plugin.CurrentActivity.dll
@@ -46,6 +48,13 @@ D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Xamarin.Forms.Platform.Android.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Xamarin.Forms.Platform.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Xamarin.Forms.Xaml.dll
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\XLabs.Core.dll
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\XLabs.Forms.dll
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\XLabs.Forms.Droid.dll
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\XLabs.Ioc.dll
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\XLabs.Platform.dll
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\XLabs.Platform.Droid.dll
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\XLabs.Serialization.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Xamarin.GooglePlayServices.Basement.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Xamarin.GooglePlayServices.Tasks.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Xamarin.GooglePlayServices.Base.dll
@@ -79,3 +88,4 @@ D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\System.Resources.ResourceManager.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Mono.Security.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\System.ComponentModel.Composition.dll
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\System.Runtime.Serialization.Xml.dll

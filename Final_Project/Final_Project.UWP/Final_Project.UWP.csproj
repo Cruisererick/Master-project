@@ -165,6 +165,15 @@
     <PackageReference Include="Xamarin.Forms.Maps">
       <Version>2.5.0.280555</Version>
     </PackageReference>
+    <PackageReference Include="XLabs.Core">
+      <Version>2.0.5782</Version>
+    </PackageReference>
+    <PackageReference Include="XLabs.Forms">
+      <Version>2.0.5782</Version>
+    </PackageReference>
+    <PackageReference Include="XLabs.Platform">
+      <Version>2.0.5782</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="..\Final_Project\Final_Project.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

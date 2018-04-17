@@ -12,6 +12,9 @@ using System.Threading;
 using Final_Project.Control;
 using Plugin.Geolocator;
 using Xamarin.Forms.Maps;
+using XLabs.Forms;
+using XLabs.Ioc;
+using XLabs.Platform.Device;
 
 namespace Final_Project.Visual
 {
@@ -25,7 +28,14 @@ namespace Final_Project.Visual
 		Interrupts interrupt;
 		bool gettingLocation = false;
 		bool getlocation = false;
-		Task t1;
+		IAccelerometer accelerometer;
+		XLabs.Vector3 LastMovement;
+		bool movement = false;
+		int still = 0;
+		int moving = 0;
+		bool accelometeractive = false;
+		Semaphore semaphoreObject = new Semaphore(initialCount: 1, maximumCount: 1, name: "accel");
+
 		public SessionLive (Project project, Project_Task task, Database_Controller databaseAccess)
 		{
 			InitializeComponent ();
@@ -35,8 +45,85 @@ namespace Final_Project.Visual
 			selected_task = task;
 			database = databaseAccess;
 			Timer_Counter.Text = "Session is not live";
+			if (!Resolver.IsSet)
+			{
+				var container = new SimpleContainer();
+				container.Register<IAccelerometer, Accelerometer>();
+				Resolver.SetResolver(container.GetResolver());
+			}
+			accelerometer = Resolver.Resolve<IAccelerometer>();
+			accelerometer.Interval = AccelerometerInterval.Normal;
 		}
 
+		private async void Accelerometer_ReadingAvailable(object sender, XLabs.EventArgs<XLabs.Vector3> e)
+		{
+				await Task.Delay(10).ContinueWith(async (arg) =>
+				{
+					if (!gettingLocation)
+					{
+						semaphoreObject.WaitOne();
+						accelerometer.ReadingAvailable -= Accelerometer_ReadingAvailable;
+						XLabs.Vector3 Currentreading = e.Value;
+						if (LastMovement is null)
+						{
+							LastMovement = Currentreading;
+						}
+						else
+						{
+							if (Math.Round(Currentreading.X,1) != Math.Round(LastMovement.X,1) || Math.Round(Currentreading.Y,1) != Math.Round(LastMovement.Y,1) || Math.Round(Currentreading.Z,1) != Math.Round(LastMovement.Z,1))
+							{
+								moving += 1;
+								if (moving > 5)
+								{
+									getlocation = false;
+									moving = 0;
+									still = 0;
+									movement = true;
+									interrupt = new Interrupts();
+									DateTime toBeClonedDateTime = DateTime.Now;
+									interrupt.start = toBeClonedDateTime;
+									bool realAnwser = false;
+									Device.BeginInvokeOnMainThread(
+									async () =>
+									{
+										realAnwser = await DisplayAlert("Movement detected", "Are you still working?", "Yes.", "No, pause.");
+										if (!realAnwser)
+										{
+											interrupt.sessionId = current.Id;
+											interrupt.Id = database.SaveInterrupt(interrupt);
+											getlocation = false;
+											Timer_Counter.Text = "Session is paused";
+											Start.Text = "Resume";
+											accelometeractive = false;
+										}
+										else
+										{
+											getlocation = true;
+											accelometeractive = true;
+										}
+										movement = false;
+									});
+								}
+							}
+							else
+							{
+								still += 1;
+								if (still > 5)
+								{
+									moving = 0;
+									still = 0;
+								}
+							}
+						}
+						while (movement) ;
+						LastMovement = Currentreading;
+						Thread.Sleep(1333);
+						if(accelometeractive)
+							accelerometer.ReadingAvailable += Accelerometer_ReadingAvailable;
+						semaphoreObject.Release();
+					}
+				});
+		}
 		public SessionLive(Database_Controller databaseAccess)
 		{
 			InitializeComponent();
@@ -64,51 +151,57 @@ namespace Final_Project.Visual
 			
 		}
 
-		private void askLocation()
+		private async void askLocation()
 		{
-			Task.Run(() =>
-			{
-				while (getlocation)
+			await Task.Delay(10).ContinueWith(async (arg) => {
+				while (true)
 				{
-					gettingLocation = true;
-					var change = GetLocation();
-					change.Wait();
-					bool realChange = change.Result;
-					if (!realChange)
+					while (getlocation)
 					{
-						getlocation = false;
-						interrupt = new Interrupts();
-						DateTime toBeClonedDateTime = DateTime.Now;
-						interrupt.start = toBeClonedDateTime;
-						var answer = Task.FromResult(false);
-						bool realAnwser = false;
-						Device.BeginInvokeOnMainThread(
-						async () =>
+						gettingLocation = true;
+						var change = GetLocation();
+						change.Wait();
+						bool realChange = change.Result;
+						if (!realChange)
 						{
-							realAnwser = await DisplayAlert("Location Change", "Hey there your location change, are you still working?", "Yes.", "No, pause.");
-							if (!realAnwser)
+							getlocation = false;
+							interrupt = new Interrupts();
+							DateTime toBeClonedDateTime = DateTime.Now;
+							interrupt.start = toBeClonedDateTime;
+							bool realAnwser = false;
+							Device.BeginInvokeOnMainThread(
+							async () =>
 							{
-								interrupt.sessionId = current.Id;
-								interrupt.Id = database.SaveInterrupt(interrupt);
-								getlocation = false;
-								Timer_Counter.Text = "Session is paused";
-								Start.Text = "Resume";
-							}
-							else
-							{
-								getlocation = true;
-							}
+								realAnwser = await DisplayAlert("Location Change", "Hey there your location change, are you still working?", "Yes.", "No, pause.");
+								if (!realAnwser)
+								{
+									interrupt.sessionId = current.Id;
+									interrupt.Id = database.SaveInterrupt(interrupt);
+									getlocation = false;
+									Timer_Counter.Text = "Session is paused";
+									Start.Text = "Resume";
+									accelometeractive = false;
+									accelerometer.ReadingAvailable -= Accelerometer_ReadingAvailable;
+									moving = 0;
+									still = 0;
+								}
+								else
+								{
+									getlocation = true;
+								}
+								gettingLocation = false;
+							});
+						}
+						else
+						{
 							gettingLocation = false;
-						});
+						}
+						while (gettingLocation) ;
+						Task.Delay(60000).Wait();
 					}
-					else
-					{
-						gettingLocation = false;
-					}
-					while (gettingLocation);
-					Task.Delay(10000).Wait();
 				}
 			});
+		
 			
 			
 		}
@@ -152,9 +245,14 @@ namespace Final_Project.Visual
 				getlocation = true;
 				askLocation();
 				Timer_Counter.Text = "Session is live";
+				accelometeractive = true;
+				accelerometer.ReadingAvailable += Accelerometer_ReadingAvailable;
 			}
 			else if (Start.Text.CompareTo("Pause") == 0)
 			{
+				accelometeractive = false;
+				accelerometer.ReadingAvailable -= Accelerometer_ReadingAvailable;
+				getlocation = false;
 				Start.Text = "Resume";
 				if (database.GetliveInterrupt() is null)
 				{
@@ -164,8 +262,9 @@ namespace Final_Project.Visual
 					interrupt.sessionId = current.Id;
 					interrupt.Id = database.SaveInterrupt(interrupt);
 				}
-				getlocation = false;
 				Timer_Counter.Text = "Session is paused";
+				
+
 			}
 			else if (Start.Text.CompareTo("Resume") == 0)
 			{
@@ -176,7 +275,8 @@ namespace Final_Project.Visual
 				database.UpdateInterrupt(interrupt);
 				getlocation = true;
 				Timer_Counter.Text = "Session is live";
-				askLocation();
+				accelometeractive = true;
+				accelerometer.ReadingAvailable += Accelerometer_ReadingAvailable;
 			}
 
 		}
@@ -192,6 +292,7 @@ namespace Final_Project.Visual
 					interrupt = database.GetliveInterrupt();
 					DateTime toBeClonedDateTime = DateTime.Now;
 					interrupt.end = toBeClonedDateTime;
+					database.UpdateInterrupt(interrupt);
 				}
 				getlocation = false;
 				Navigation.PopModalAsync();

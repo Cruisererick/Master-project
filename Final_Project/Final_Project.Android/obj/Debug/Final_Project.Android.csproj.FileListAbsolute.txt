@@ -2,6 +2,10 @@ D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\Final_Project.Android.pdb
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\com.companyname.Final_Project.apk
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\com.companyname.Final_Project-Signed.apk
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\XbdMerge\Xamarin.GooglePlayServices.Basement.dll
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\XbdMerge\Xamarin.GooglePlayServices.Tasks.dll
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\XbdMerge\Xamarin.GooglePlayServices.Base.dll
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\XbdMerge\Xamarin.GooglePlayServices.Maps.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\Final_Project.Android.csproj.CoreCompileInputs.cache
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\Final_Project.Droid.App.xaml.g.cs
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\Final_Project.Droid.Visual.MainPage.xaml.g.cs
@@ -21,6 +25,7 @@ D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\res\values\styles.xml
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\R.cs.flag
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\uploadflags.txt
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\Final_Project.Android.csprojResolveAssemblyReference.cache
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\Final_Project.Android.dll.mdb
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\FormsViewGroup.dll.mdb
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\Plugin.Geolocator.dll.mdb
@@ -37,11 +42,6 @@ D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Xamarin.Forms.Core.dll.mdb
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Xamarin.Forms.Platform.Android.dll.mdb
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Xamarin.Forms.Xaml.dll.mdb
-D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\Final_Project.Android.csprojResolveAssemblyReference.cache
-D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\XbdMerge\Xamarin.GooglePlayServices.Basement.dll
-D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\XbdMerge\Xamarin.GooglePlayServices.Tasks.dll
-D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\XbdMerge\Xamarin.GooglePlayServices.Base.dll
-D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\XbdMerge\Xamarin.GooglePlayServices.Maps.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\Final_Project.Android.dll
 bin\Debug\FormsViewGroup.dll.mdb
 bin\Debug\Plugin.Geolocator.dll.mdb
@@ -51,6 +51,7 @@ bin\Debug\Xamarin.Forms.Core.dll.mdb
 bin\Debug\Xamarin.Forms.Platform.Android.dll.mdb
 bin\Debug\Xamarin.Forms.Xaml.dll.mdb
 bin\Debug\Mono.Android.pdb
+bin\Debug\Mono.Android.Export.pdb
 bin\Debug\mscorlib.pdb
 bin\Debug\Plugin.Geolocator.Abstractions.pdb
 bin\Debug\Plugin.Permissions.Abstractions.pdb
@@ -74,6 +75,7 @@ obj\Debug\linksrc\Xamarin.Forms.Core.dll.mdb
 obj\Debug\linksrc\Xamarin.Forms.Platform.Android.dll.mdb
 obj\Debug\linksrc\Xamarin.Forms.Xaml.dll.mdb
 obj\Debug\linksrc\Mono.Android.pdb
+obj\Debug\linksrc\Mono.Android.Export.pdb
 obj\Debug\linksrc\mscorlib.pdb
 obj\Debug\linksrc\Plugin.Geolocator.Abstractions.pdb
 obj\Debug\linksrc\Plugin.Permissions.Abstractions.pdb
