@@ -3,7 +3,7 @@
 	<uses-sdk android:minSdkVersion="15" />
 	<application android:label="Final_Project.Android">
     <meta-data android:name="com.google.android.maps.v2.API_KEY"
-             android:value="AIzaSyC-unjxx0JD6si2iwgbq4wh0w7qO84dIHw" />
+             android:value="AIzaSyC-unjxx0JD6si2iwgbq4wh0w7qO84dIHw"/>
   </application>
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -12,5 +12,5 @@
   <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
   <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
   <uses-permission android:name="android.permission.INTERNET" />
-  <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true" />
+  <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true"/>
 </manifest>

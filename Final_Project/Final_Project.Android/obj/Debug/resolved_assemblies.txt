@@ -9,6 +9,10 @@ D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Plugin.CurrentActivity.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Plugin.Geolocator.Abstractions.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Plugin.Geolocator.dll
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Plugin.LocalNotifications.Abstractions.dll
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Plugin.LocalNotifications.dll
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Plugin.Notifications.Abstractions.dll
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Plugin.Notifications.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Plugin.Permissions.Abstractions.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Plugin.Permissions.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Rg.Plugins.Popup.dll
@@ -23,6 +27,8 @@ D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\SQLitePCLRaw.provider.e_sqlite3.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\System.Core.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\System.dll
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\System.IO.Compression.dll
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\System.Net.Http.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\System.Runtime.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\System.Xml.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\System.Xml.Linq.dll
@@ -48,6 +54,7 @@ D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Xamarin.Forms.Platform.Android.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Xamarin.Forms.Platform.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Xamarin.Forms.Xaml.dll
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\XamarinShortcutBadger.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\XLabs.Core.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\XLabs.Forms.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\XLabs.Forms.Droid.dll
@@ -70,7 +77,6 @@ D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\System.Runtime.InteropServices.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\System.Runtime.Extensions.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\System.Reflection.Extensions.dll
-D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\System.Net.Http.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\System.Runtime.Serialization.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\System.ServiceModel.Internals.dll
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\System.IO.dll

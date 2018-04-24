@@ -2,6 +2,12 @@
   "version": 3,
   "targets": {
     "UAP,Version=v10.0.16299": {
+      "Acr.Notifications/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Plugin.Notifications": "4.0.0"
+        }
+      },
       "ExifLib.PCL/1.0.1": {
         "type": "package",
         "compile": {
@@ -228,6 +234,15 @@
           "ref/uap10.0.15138/netstandard.dll": {}
         }
       },
+      "Microsoft.Toolkit.Uwp.Notifications/1.4.1": {
+        "type": "package",
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.Notifications.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.Notifications.dll": {}
+        }
+      },
       "NETStandard.Library/2.0.1": {
         "type": "package",
         "dependencies": {
@@ -250,6 +265,31 @@
         },
         "runtime": {
           "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Plugin.Notifications/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Toolkit.Uwp.Notifications": "[1.4.1, 2.0.0)",
+          "NETStandard.Library": "1.6.1",
+          "QueryString.NET": "[1.0.0, 2.0.0)"
+        },
+        "compile": {
+          "lib/uap10/Plugin.Notifications.Abstractions.dll": {},
+          "lib/uap10/Plugin.Notifications.dll": {}
+        },
+        "runtime": {
+          "lib/uap10/Plugin.Notifications.Abstractions.dll": {},
+          "lib/uap10/Plugin.Notifications.dll": {}
+        }
+      },
+      "QueryString.NET/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/dotnet/QueryString.NETCore.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/QueryString.NETCore.dll": {}
         }
       },
       "Rg.Plugins.Popup/1.0.4": {
@@ -386,6 +426,17 @@
           "lib/UAP10/Plugin.Geolocator.dll": {}
         }
       },
+      "Xam.Plugins.Notifier/2.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/UAP10/Plugin.LocalNotifications.Abstractions.dll": {},
+          "lib/UAP10/Plugin.LocalNotifications.dll": {}
+        },
+        "runtime": {
+          "lib/UAP10/Plugin.LocalNotifications.Abstractions.dll": {},
+          "lib/UAP10/Plugin.LocalNotifications.dll": {}
+        }
+      },
       "Xamarin.Forms/2.5.0.122203": {
         "type": "package",
         "compile": {
@@ -487,6 +538,12 @@
       }
     },
     "UAP,Version=v10.0.16299/win10-arm": {
+      "Acr.Notifications/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Plugin.Notifications": "4.0.0"
+        }
+      },
       "ExifLib.PCL/1.0.1": {
         "type": "package",
         "compile": {
@@ -714,6 +771,15 @@
           "ref/uap10.0.15138/netstandard.dll": {}
         }
       },
+      "Microsoft.Toolkit.Uwp.Notifications/1.4.1": {
+        "type": "package",
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.Notifications.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.Notifications.dll": {}
+        }
+      },
       "NETStandard.Library/2.0.1": {
         "type": "package",
         "dependencies": {
@@ -736,6 +802,31 @@
         },
         "runtime": {
           "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Plugin.Notifications/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Toolkit.Uwp.Notifications": "[1.4.1, 2.0.0)",
+          "NETStandard.Library": "1.6.1",
+          "QueryString.NET": "[1.0.0, 2.0.0)"
+        },
+        "compile": {
+          "lib/uap10/Plugin.Notifications.Abstractions.dll": {},
+          "lib/uap10/Plugin.Notifications.dll": {}
+        },
+        "runtime": {
+          "lib/uap10/Plugin.Notifications.Abstractions.dll": {},
+          "lib/uap10/Plugin.Notifications.dll": {}
+        }
+      },
+      "QueryString.NET/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/dotnet/QueryString.NETCore.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/QueryString.NETCore.dll": {}
         }
       },
       "Rg.Plugins.Popup/1.0.4": {
@@ -1034,6 +1125,17 @@
           "lib/UAP10/Plugin.Geolocator.dll": {}
         }
       },
+      "Xam.Plugins.Notifier/2.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/UAP10/Plugin.LocalNotifications.Abstractions.dll": {},
+          "lib/UAP10/Plugin.LocalNotifications.dll": {}
+        },
+        "runtime": {
+          "lib/UAP10/Plugin.LocalNotifications.Abstractions.dll": {},
+          "lib/UAP10/Plugin.LocalNotifications.dll": {}
+        }
+      },
       "Xamarin.Forms/2.5.0.122203": {
         "type": "package",
         "compile": {
@@ -1135,6 +1237,12 @@
       }
     },
     "UAP,Version=v10.0.16299/win10-arm-aot": {
+      "Acr.Notifications/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Plugin.Notifications": "4.0.0"
+        }
+      },
       "ExifLib.PCL/1.0.1": {
         "type": "package",
         "compile": {
@@ -1362,6 +1470,15 @@
           "ref/uap10.0.15138/netstandard.dll": {}
         }
       },
+      "Microsoft.Toolkit.Uwp.Notifications/1.4.1": {
+        "type": "package",
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.Notifications.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.Notifications.dll": {}
+        }
+      },
       "NETStandard.Library/2.0.1": {
         "type": "package",
         "dependencies": {
@@ -1384,6 +1501,31 @@
         },
         "runtime": {
           "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Plugin.Notifications/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Toolkit.Uwp.Notifications": "[1.4.1, 2.0.0)",
+          "NETStandard.Library": "1.6.1",
+          "QueryString.NET": "[1.0.0, 2.0.0)"
+        },
+        "compile": {
+          "lib/uap10/Plugin.Notifications.Abstractions.dll": {},
+          "lib/uap10/Plugin.Notifications.dll": {}
+        },
+        "runtime": {
+          "lib/uap10/Plugin.Notifications.Abstractions.dll": {},
+          "lib/uap10/Plugin.Notifications.dll": {}
+        }
+      },
+      "QueryString.NET/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/dotnet/QueryString.NETCore.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/QueryString.NETCore.dll": {}
         }
       },
       "Rg.Plugins.Popup/1.0.4": {
@@ -1683,6 +1825,17 @@
           "lib/UAP10/Plugin.Geolocator.dll": {}
         }
       },
+      "Xam.Plugins.Notifier/2.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/UAP10/Plugin.LocalNotifications.Abstractions.dll": {},
+          "lib/UAP10/Plugin.LocalNotifications.dll": {}
+        },
+        "runtime": {
+          "lib/UAP10/Plugin.LocalNotifications.Abstractions.dll": {},
+          "lib/UAP10/Plugin.LocalNotifications.dll": {}
+        }
+      },
       "Xamarin.Forms/2.5.0.122203": {
         "type": "package",
         "compile": {
@@ -1784,6 +1937,12 @@
       }
     },
     "UAP,Version=v10.0.16299/win10-x64": {
+      "Acr.Notifications/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Plugin.Notifications": "4.0.0"
+        }
+      },
       "ExifLib.PCL/1.0.1": {
         "type": "package",
         "compile": {
@@ -2011,6 +2170,15 @@
           "ref/uap10.0.15138/netstandard.dll": {}
         }
       },
+      "Microsoft.Toolkit.Uwp.Notifications/1.4.1": {
+        "type": "package",
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.Notifications.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.Notifications.dll": {}
+        }
+      },
       "NETStandard.Library/2.0.1": {
         "type": "package",
         "dependencies": {
@@ -2033,6 +2201,31 @@
         },
         "runtime": {
           "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Plugin.Notifications/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Toolkit.Uwp.Notifications": "[1.4.1, 2.0.0)",
+          "NETStandard.Library": "1.6.1",
+          "QueryString.NET": "[1.0.0, 2.0.0)"
+        },
+        "compile": {
+          "lib/uap10/Plugin.Notifications.Abstractions.dll": {},
+          "lib/uap10/Plugin.Notifications.dll": {}
+        },
+        "runtime": {
+          "lib/uap10/Plugin.Notifications.Abstractions.dll": {},
+          "lib/uap10/Plugin.Notifications.dll": {}
+        }
+      },
+      "QueryString.NET/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/dotnet/QueryString.NETCore.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/QueryString.NETCore.dll": {}
         }
       },
       "Rg.Plugins.Popup/1.0.4": {
@@ -2331,6 +2524,17 @@
           "lib/UAP10/Plugin.Geolocator.dll": {}
         }
       },
+      "Xam.Plugins.Notifier/2.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/UAP10/Plugin.LocalNotifications.Abstractions.dll": {},
+          "lib/UAP10/Plugin.LocalNotifications.dll": {}
+        },
+        "runtime": {
+          "lib/UAP10/Plugin.LocalNotifications.Abstractions.dll": {},
+          "lib/UAP10/Plugin.LocalNotifications.dll": {}
+        }
+      },
       "Xamarin.Forms/2.5.0.122203": {
         "type": "package",
         "compile": {
@@ -2432,6 +2636,12 @@
       }
     },
     "UAP,Version=v10.0.16299/win10-x64-aot": {
+      "Acr.Notifications/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Plugin.Notifications": "4.0.0"
+        }
+      },
       "ExifLib.PCL/1.0.1": {
         "type": "package",
         "compile": {
@@ -2659,6 +2869,15 @@
           "ref/uap10.0.15138/netstandard.dll": {}
         }
       },
+      "Microsoft.Toolkit.Uwp.Notifications/1.4.1": {
+        "type": "package",
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.Notifications.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.Notifications.dll": {}
+        }
+      },
       "NETStandard.Library/2.0.1": {
         "type": "package",
         "dependencies": {
@@ -2681,6 +2900,31 @@
         },
         "runtime": {
           "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Plugin.Notifications/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Toolkit.Uwp.Notifications": "[1.4.1, 2.0.0)",
+          "NETStandard.Library": "1.6.1",
+          "QueryString.NET": "[1.0.0, 2.0.0)"
+        },
+        "compile": {
+          "lib/uap10/Plugin.Notifications.Abstractions.dll": {},
+          "lib/uap10/Plugin.Notifications.dll": {}
+        },
+        "runtime": {
+          "lib/uap10/Plugin.Notifications.Abstractions.dll": {},
+          "lib/uap10/Plugin.Notifications.dll": {}
+        }
+      },
+      "QueryString.NET/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/dotnet/QueryString.NETCore.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/QueryString.NETCore.dll": {}
         }
       },
       "Rg.Plugins.Popup/1.0.4": {
@@ -2980,6 +3224,17 @@
           "lib/UAP10/Plugin.Geolocator.dll": {}
         }
       },
+      "Xam.Plugins.Notifier/2.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/UAP10/Plugin.LocalNotifications.Abstractions.dll": {},
+          "lib/UAP10/Plugin.LocalNotifications.dll": {}
+        },
+        "runtime": {
+          "lib/UAP10/Plugin.LocalNotifications.Abstractions.dll": {},
+          "lib/UAP10/Plugin.LocalNotifications.dll": {}
+        }
+      },
       "Xamarin.Forms/2.5.0.122203": {
         "type": "package",
         "compile": {
@@ -3081,6 +3336,12 @@
       }
     },
     "UAP,Version=v10.0.16299/win10-x86": {
+      "Acr.Notifications/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Plugin.Notifications": "4.0.0"
+        }
+      },
       "ExifLib.PCL/1.0.1": {
         "type": "package",
         "compile": {
@@ -3308,6 +3569,15 @@
           "ref/uap10.0.15138/netstandard.dll": {}
         }
       },
+      "Microsoft.Toolkit.Uwp.Notifications/1.4.1": {
+        "type": "package",
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.Notifications.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.Notifications.dll": {}
+        }
+      },
       "NETStandard.Library/2.0.1": {
         "type": "package",
         "dependencies": {
@@ -3330,6 +3600,31 @@
         },
         "runtime": {
           "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Plugin.Notifications/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Toolkit.Uwp.Notifications": "[1.4.1, 2.0.0)",
+          "NETStandard.Library": "1.6.1",
+          "QueryString.NET": "[1.0.0, 2.0.0)"
+        },
+        "compile": {
+          "lib/uap10/Plugin.Notifications.Abstractions.dll": {},
+          "lib/uap10/Plugin.Notifications.dll": {}
+        },
+        "runtime": {
+          "lib/uap10/Plugin.Notifications.Abstractions.dll": {},
+          "lib/uap10/Plugin.Notifications.dll": {}
+        }
+      },
+      "QueryString.NET/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/dotnet/QueryString.NETCore.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/QueryString.NETCore.dll": {}
         }
       },
       "Rg.Plugins.Popup/1.0.4": {
@@ -3628,6 +3923,17 @@
           "lib/UAP10/Plugin.Geolocator.dll": {}
         }
       },
+      "Xam.Plugins.Notifier/2.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/UAP10/Plugin.LocalNotifications.Abstractions.dll": {},
+          "lib/UAP10/Plugin.LocalNotifications.dll": {}
+        },
+        "runtime": {
+          "lib/UAP10/Plugin.LocalNotifications.Abstractions.dll": {},
+          "lib/UAP10/Plugin.LocalNotifications.dll": {}
+        }
+      },
       "Xamarin.Forms/2.5.0.122203": {
         "type": "package",
         "compile": {
@@ -3729,6 +4035,12 @@
       }
     },
     "UAP,Version=v10.0.16299/win10-x86-aot": {
+      "Acr.Notifications/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Plugin.Notifications": "4.0.0"
+        }
+      },
       "ExifLib.PCL/1.0.1": {
         "type": "package",
         "compile": {
@@ -3956,6 +4268,15 @@
           "ref/uap10.0.15138/netstandard.dll": {}
         }
       },
+      "Microsoft.Toolkit.Uwp.Notifications/1.4.1": {
+        "type": "package",
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.Notifications.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.Notifications.dll": {}
+        }
+      },
       "NETStandard.Library/2.0.1": {
         "type": "package",
         "dependencies": {
@@ -3978,6 +4299,31 @@
         },
         "runtime": {
           "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Plugin.Notifications/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Toolkit.Uwp.Notifications": "[1.4.1, 2.0.0)",
+          "NETStandard.Library": "1.6.1",
+          "QueryString.NET": "[1.0.0, 2.0.0)"
+        },
+        "compile": {
+          "lib/uap10/Plugin.Notifications.Abstractions.dll": {},
+          "lib/uap10/Plugin.Notifications.dll": {}
+        },
+        "runtime": {
+          "lib/uap10/Plugin.Notifications.Abstractions.dll": {},
+          "lib/uap10/Plugin.Notifications.dll": {}
+        }
+      },
+      "QueryString.NET/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/dotnet/QueryString.NETCore.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/QueryString.NETCore.dll": {}
         }
       },
       "Rg.Plugins.Popup/1.0.4": {
@@ -4277,6 +4623,17 @@
           "lib/UAP10/Plugin.Geolocator.dll": {}
         }
       },
+      "Xam.Plugins.Notifier/2.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/UAP10/Plugin.LocalNotifications.Abstractions.dll": {},
+          "lib/UAP10/Plugin.LocalNotifications.dll": {}
+        },
+        "runtime": {
+          "lib/UAP10/Plugin.LocalNotifications.Abstractions.dll": {},
+          "lib/UAP10/Plugin.LocalNotifications.dll": {}
+        }
+      },
       "Xamarin.Forms/2.5.0.122203": {
         "type": "package",
         "compile": {
@@ -4379,6 +4736,18 @@
     }
   },
   "libraries": {
+    "Acr.Notifications/4.0.0": {
+      "sha512": "J7RaTR4gaANli+sG5ZPIfT314lxodD/6zyzWthxereHrVw61ALDIVKTZBdrXbbYaDOSSJMmX+fWzTggAwEvd0w==",
+      "type": "package",
+      "path": "acr.notifications/4.0.0",
+      "files": [
+        "acr.notifications.4.0.0.nupkg.sha512",
+        "acr.notifications.nuspec",
+        "nuget.exe",
+        "pack.cmd",
+        "push.cmd"
+      ]
+    },
     "ExifLib.PCL/1.0.1": {
       "sha512": "16KG9oXTPJkjCRq2xQmfPfJqCfcCjK3h034oazOE61LM4kddMr50a6EgrOV+F7RtIzVVd5ATEZRCiNWnnWqDkA==",
       "type": "package",
@@ -6650,6 +7019,30 @@
         "runtime.json"
       ]
     },
+    "Microsoft.Toolkit.Uwp.Notifications/1.4.1": {
+      "sha512": "Xi32HrnQLgas2Tz4a/3LZGZvY+4KZnlQZQdPFkK0G3AfMHKDxnREI/QKUOyLK6zxr62uaCME18pyStu8ueP1FA==",
+      "type": "package",
+      "path": "microsoft.toolkit.uwp.notifications/1.4.1",
+      "files": [
+        "build/native/Microsoft.Toolkit.Uwp.Notifications.targets",
+        "lib/dotnet/Microsoft.Toolkit.Uwp.Notifications.dll",
+        "lib/dotnet/Microsoft.Toolkit.Uwp.Notifications.pdb",
+        "lib/dotnet/Microsoft.Toolkit.Uwp.Notifications.xml",
+        "lib/native/Microsoft.Toolkit.Uwp.Notifications.pdb",
+        "lib/native/Microsoft.Toolkit.Uwp.Notifications.pri",
+        "lib/native/Microsoft.Toolkit.Uwp.Notifications.winmd",
+        "lib/native/Microsoft.Toolkit.Uwp.Notifications.winmd.xml",
+        "lib/native/Microsoft.Toolkit.Uwp.Notifications.xml",
+        "lib/portable-net40+sl50+win+wpa81+wp80/Microsoft.Toolkit.Uwp.Notifications.dll",
+        "lib/portable-net40+sl50+win+wpa81+wp80/Microsoft.Toolkit.Uwp.Notifications.pdb",
+        "lib/portable-net40+sl50+win+wpa81+wp80/Microsoft.Toolkit.Uwp.Notifications.xml",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.Notifications.dll",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.Notifications.pdb",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.Notifications.xml",
+        "microsoft.toolkit.uwp.notifications.1.4.1.nupkg.sha512",
+        "microsoft.toolkit.uwp.notifications.nuspec"
+      ]
+    },
     "NETStandard.Library/2.0.1": {
       "sha512": "oA6nwv9MhEKYvLpjZ0ggSpb1g4CQViDVQjLUcDWg598jtvJbpfeP2reqwI1GLW2TbxC/Ml7xL6BBR1HmKPXlTg==",
       "type": "package",
@@ -6800,6 +7193,51 @@
         "newtonsoft.json.9.0.1.nupkg.sha512",
         "newtonsoft.json.nuspec",
         "tools/install.ps1"
+      ]
+    },
+    "Plugin.Notifications/4.0.0": {
+      "sha512": "GJEFQNeRE/9b8nFgayloH3wYoXTPqmZA07Tv8IGb3n1so+u1bYCDwek8m+UiOlvwa91hFpIay7c2CCUnA4mElw==",
+      "type": "package",
+      "path": "plugin.notifications/4.0.0",
+      "files": [
+        "lib/MonoAndroid10/Plugin.Notifications.Abstractions.dll",
+        "lib/MonoAndroid10/Plugin.Notifications.Abstractions.pdb",
+        "lib/MonoAndroid10/Plugin.Notifications.dll",
+        "lib/MonoAndroid10/Plugin.Notifications.pdb",
+        "lib/Xamarin.Mac20/Plugin.Notifications.Abstractions.dll",
+        "lib/Xamarin.Mac20/Plugin.Notifications.Abstractions.pdb",
+        "lib/Xamarin.Mac20/Plugin.Notifications.dll",
+        "lib/Xamarin.iOS10/Plugin.Notifications.Abstractions.dll",
+        "lib/Xamarin.iOS10/Plugin.Notifications.Abstractions.pdb",
+        "lib/Xamarin.iOS10/Plugin.Notifications.dll",
+        "lib/Xamarin.iOS10/Plugin.Notifications.pdb",
+        "lib/netstandard1.0/Plugin.Notifications.Abstractions.dll",
+        "lib/netstandard1.0/Plugin.Notifications.Abstractions.pdb",
+        "lib/netstandard1.0/Plugin.Notifications.deps.json",
+        "lib/netstandard1.0/Plugin.Notifications.dll",
+        "lib/netstandard1.0/Plugin.Notifications.pdb",
+        "lib/uap10/Plugin.Notifications.Abstractions.dll",
+        "lib/uap10/Plugin.Notifications.Abstractions.pdb",
+        "lib/uap10/Plugin.Notifications.dll",
+        "lib/uap10/Plugin.Notifications.pdb",
+        "lib/uap10/Plugin.Notifications.pri",
+        "plugin.notifications.4.0.0.nupkg.sha512",
+        "plugin.notifications.nuspec"
+      ]
+    },
+    "QueryString.NET/1.0.0": {
+      "sha512": "5iVQSmK0X6iTMQWKbegV92lfAcCjJXFduL6CKVReJDzdWmH6k10aztDRXE9cWU4YW1tXsCOfkwqRCG/8Tod9aA==",
+      "type": "package",
+      "path": "querystring.net/1.0.0",
+      "files": [
+        "lib/dotnet/QueryString.NETCore.XML",
+        "lib/dotnet/QueryString.NETCore.dll",
+        "lib/dotnet/QueryString.NETCore.pdb",
+        "lib/portable-net4+sl50+win+wpa81+wp80/QueryString.Portable.dll",
+        "lib/portable-net4+sl50+win+wpa81+wp80/QueryString.Portable.pdb",
+        "lib/portable-net4+sl50+win+wpa81+wp80/QueryString.Portable.xml",
+        "querystring.net.1.0.0.nupkg.sha512",
+        "querystring.net.nuspec"
       ]
     },
     "Rg.Plugins.Popup/1.0.4": {
@@ -8113,6 +8551,43 @@
         "xam.plugin.geolocator.nuspec"
       ]
     },
+    "Xam.Plugins.Notifier/2.1.0": {
+      "sha512": "JzwutxVpdXHLp/lAy9ZUop3xjfuCYm0dS5zXnF2M8tY6XF+bKSNOk1W0MvE0lAZSPCfUYFP2/J88BpYDFj10CQ==",
+      "type": "package",
+      "path": "xam.plugins.notifier/2.1.0",
+      "files": [
+        "lib/MonoAndroid10/Plugin.LocalNotifications.Abstractions.dll",
+        "lib/MonoAndroid10/Plugin.LocalNotifications.Abstractions.xml",
+        "lib/MonoAndroid10/Plugin.LocalNotifications.dll",
+        "lib/MonoAndroid10/Plugin.LocalNotifications.xml",
+        "lib/UAP10/Plugin.LocalNotifications.Abstractions.dll",
+        "lib/UAP10/Plugin.LocalNotifications.Abstractions.xml",
+        "lib/UAP10/Plugin.LocalNotifications.dll",
+        "lib/UAP10/Plugin.LocalNotifications.xml",
+        "lib/Xamarin.iOS10/Plugin.LocalNotifications.Abstractions.dll",
+        "lib/Xamarin.iOS10/Plugin.LocalNotifications.Abstractions.xml",
+        "lib/Xamarin.iOS10/Plugin.LocalNotifications.dll",
+        "lib/Xamarin.iOS10/Plugin.LocalNotifications.xml",
+        "lib/portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10/Plugin.LocalNotifications.Abstractions.dll",
+        "lib/portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10/Plugin.LocalNotifications.Abstractions.xml",
+        "lib/portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10/Plugin.LocalNotifications.dll",
+        "lib/portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10/Plugin.LocalNotifications.xml",
+        "lib/win8/Plugin.LocalNotifications.Abstractions.dll",
+        "lib/win8/Plugin.LocalNotifications.Abstractions.xml",
+        "lib/win8/Plugin.LocalNotifications.dll",
+        "lib/win8/Plugin.LocalNotifications.xml",
+        "lib/wp8/Plugin.LocalNotifications.Abstractions.dll",
+        "lib/wp8/Plugin.LocalNotifications.Abstractions.xml",
+        "lib/wp8/Plugin.LocalNotifications.dll",
+        "lib/wp8/Plugin.LocalNotifications.xml",
+        "lib/wpa81/Plugin.LocalNotifications.Abstractions.dll",
+        "lib/wpa81/Plugin.LocalNotifications.Abstractions.xml",
+        "lib/wpa81/Plugin.LocalNotifications.dll",
+        "lib/wpa81/Plugin.LocalNotifications.xml",
+        "xam.plugins.notifier.2.1.0.nupkg.sha512",
+        "xam.plugins.notifier.nuspec"
+      ]
+    },
     "Xamarin.Forms/2.5.0.122203": {
       "sha512": "qg7A2IXbVV/5u9qqeiDhRMwpVEsbWKBxzeAtD0rTuntmaDB1Z7WuBg5IK2VBklJbKe2Ps8V9zBfEwgJIqPVJUw==",
       "type": "package",
@@ -8476,6 +8951,7 @@
   },
   "projectFileDependencyGroups": {
     "UAP,Version=v10.0.16299": [
+      "Acr.Notifications >= 4.0.0",
       "Microsoft.NETCore.UniversalWindowsPlatform >= 6.0.1",
       "Rg.Plugins.Popup >= 1.0.4",
       "SQLiteNetExtensions >= 2.0.0",
@@ -8483,6 +8959,7 @@
       "XLabs.Forms >= 2.0.5782",
       "XLabs.Platform >= 2.0.5782",
       "Xam.Plugin.Geolocator >= 4.2.0",
+      "Xam.Plugins.Notifier >= 2.1.0",
       "Xamarin.Forms >= 2.5.0.122203",
       "Xamarin.Forms.Maps >= 2.5.0.280555",
       "sqlite-net-pcl >= 1.4.118"
@@ -8526,6 +9003,10 @@
     "frameworks": {
       "uap10.0.16299": {
         "dependencies": {
+          "Acr.Notifications": {
+            "target": "Package",
+            "version": "[4.0.0, )"
+          },
           "Microsoft.NETCore.UniversalWindowsPlatform": {
             "target": "Package",
             "version": "[6.0.1, )"
@@ -8553,6 +9034,10 @@
           "Xam.Plugin.Geolocator": {
             "target": "Package",
             "version": "[4.2.0, )"
+          },
+          "Xam.Plugins.Notifier": {
+            "target": "Package",
+            "version": "[2.1.0, )"
           },
           "Xamarin.Forms": {
             "target": "Package",

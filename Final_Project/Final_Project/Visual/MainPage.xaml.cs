@@ -24,7 +24,6 @@ namespace Final_Project
 		Interrupts interrupt;
 		public MainPage()
 		{
-			
 			List<Project> ProjectsL;
 			if (database.GetUser() == null)
 			{

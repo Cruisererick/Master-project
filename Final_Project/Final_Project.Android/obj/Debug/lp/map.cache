@@ -4,6 +4,10 @@ Newtonsoft.Json
 Plugin.CurrentActivity
 Plugin.Geolocator.Abstractions
 Plugin.Geolocator
+Plugin.LocalNotifications.Abstractions
+Plugin.LocalNotifications
+Plugin.Notifications.Abstractions
+Plugin.Notifications
 Plugin.Permissions.Abstractions
 Plugin.Permissions
 Rg.Plugins.Popup
@@ -39,6 +43,7 @@ Xamarin.Forms.Maps
 Xamarin.Forms.Platform.Android
 Xamarin.Forms.Platform
 Xamarin.Forms.Xaml
+XamarinShortcutBadger
 XLabs.Core
 XLabs.Forms
 XLabs.Forms.Droid

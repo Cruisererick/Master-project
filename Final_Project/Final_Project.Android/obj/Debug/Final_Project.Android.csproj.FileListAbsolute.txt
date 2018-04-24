@@ -25,42 +25,51 @@ D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\res\values\styles.xml
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\R.cs.flag
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\uploadflags.txt
-D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\Final_Project.Android.csprojResolveAssemblyReference.cache
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\Final_Project.Android.dll.mdb
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\FormsViewGroup.dll.mdb
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\Plugin.Geolocator.dll.mdb
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\Plugin.Notifications.dll.mdb
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\Plugin.Permissions.dll.mdb
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\SQLiteNetExtensions.dll.mdb
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\Xamarin.Forms.Core.dll.mdb
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\Xamarin.Forms.Platform.Android.dll.mdb
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\Xamarin.Forms.Xaml.dll.mdb
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\XamarinShortcutBadger.dll.mdb
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Final_Project.Android.dll.mdb
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\FormsViewGroup.dll.mdb
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Plugin.Geolocator.dll.mdb
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Plugin.Notifications.dll.mdb
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Plugin.Permissions.dll.mdb
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\SQLiteNetExtensions.dll.mdb
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Xamarin.Forms.Core.dll.mdb
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Xamarin.Forms.Platform.Android.dll.mdb
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Xamarin.Forms.Xaml.dll.mdb
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\XamarinShortcutBadger.dll.mdb
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\Final_Project.Android.csprojResolveAssemblyReference.cache
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\res\drawable\notti_icon.png
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\Final_Project.Android.dll
 bin\Debug\FormsViewGroup.dll.mdb
 bin\Debug\Plugin.Geolocator.dll.mdb
+bin\Debug\Plugin.Notifications.dll.mdb
 bin\Debug\Plugin.Permissions.dll.mdb
 bin\Debug\SQLiteNetExtensions.dll.mdb
 bin\Debug\Xamarin.Forms.Core.dll.mdb
 bin\Debug\Xamarin.Forms.Platform.Android.dll.mdb
 bin\Debug\Xamarin.Forms.Xaml.dll.mdb
+bin\Debug\XamarinShortcutBadger.dll.mdb
 bin\Debug\Mono.Android.pdb
 bin\Debug\Mono.Android.Export.pdb
 bin\Debug\mscorlib.pdb
 bin\Debug\Plugin.Geolocator.Abstractions.pdb
+bin\Debug\Plugin.Notifications.Abstractions.pdb
 bin\Debug\Plugin.Permissions.Abstractions.pdb
 bin\Debug\SQLite-net.pdb
 bin\Debug\System.Core.pdb
 bin\Debug\System.pdb
+bin\Debug\System.IO.Compression.pdb
+bin\Debug\System.Net.Http.pdb
 bin\Debug\System.Xml.pdb
 bin\Debug\System.Xml.Linq.pdb
-bin\Debug\System.Net.Http.pdb
 bin\Debug\System.Runtime.Serialization.pdb
 bin\Debug\System.ServiceModel.Internals.pdb
 bin\Debug\Microsoft.CSharp.pdb
@@ -69,22 +78,26 @@ bin\Debug\System.ComponentModel.Composition.pdb
 obj\Debug\linksrc\Final_Project.Android.dll.mdb
 obj\Debug\linksrc\FormsViewGroup.dll.mdb
 obj\Debug\linksrc\Plugin.Geolocator.dll.mdb
+obj\Debug\linksrc\Plugin.Notifications.dll.mdb
 obj\Debug\linksrc\Plugin.Permissions.dll.mdb
 obj\Debug\linksrc\SQLiteNetExtensions.dll.mdb
 obj\Debug\linksrc\Xamarin.Forms.Core.dll.mdb
 obj\Debug\linksrc\Xamarin.Forms.Platform.Android.dll.mdb
 obj\Debug\linksrc\Xamarin.Forms.Xaml.dll.mdb
+obj\Debug\linksrc\XamarinShortcutBadger.dll.mdb
 obj\Debug\linksrc\Mono.Android.pdb
 obj\Debug\linksrc\Mono.Android.Export.pdb
 obj\Debug\linksrc\mscorlib.pdb
 obj\Debug\linksrc\Plugin.Geolocator.Abstractions.pdb
+obj\Debug\linksrc\Plugin.Notifications.Abstractions.pdb
 obj\Debug\linksrc\Plugin.Permissions.Abstractions.pdb
 obj\Debug\linksrc\SQLite-net.pdb
 obj\Debug\linksrc\System.Core.pdb
 obj\Debug\linksrc\System.pdb
+obj\Debug\linksrc\System.IO.Compression.pdb
+obj\Debug\linksrc\System.Net.Http.pdb
 obj\Debug\linksrc\System.Xml.pdb
 obj\Debug\linksrc\System.Xml.Linq.pdb
-obj\Debug\linksrc\System.Net.Http.pdb
 obj\Debug\linksrc\System.Runtime.Serialization.pdb
 obj\Debug\linksrc\System.ServiceModel.Internals.pdb
 obj\Debug\linksrc\Microsoft.CSharp.pdb

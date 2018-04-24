@@ -3,7 +3,6 @@ using SQLite;
 using SQLiteNetExtensions.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Xamarin.Forms;
 
 namespace Final_Project.Control
@@ -28,6 +27,7 @@ namespace Final_Project.Control
 			database.CreateTable<Session>();
 			database.CreateTable<Interrupts>();
 			database.CreateTable<Location>();
+			database.CreateTable<RunningInfo>();
 		}
 
 		public void DropTables()
@@ -39,6 +39,7 @@ namespace Final_Project.Control
 			database.DropTable<Session>();
 			database.DropTable<Interrupts>();
 			database.DropTable<Location>();
+			database.DropTable<RunningInfo>();
 		}
 
 		public int SaveProject(Project project)
@@ -488,5 +489,66 @@ namespace Final_Project.Control
 
 			}
 		}
+
+		public int SaveRunningInfo(RunningInfo info)
+		{
+			lock (locker)
+			{
+				if (info.Id != -1)
+				{
+					try
+					{
+						database.Insert(info);
+						SQLiteCommand cmd = database.CreateCommand("SELECT last_insert_rowid()");
+						cmd.CommandText = "SELECT last_insert_rowid()";
+						Int64 LastRowID64 = cmd.ExecuteScalar<Int64>();
+						int LastRowID = (int)LastRowID64;
+						return LastRowID;
+					}
+					catch (Exception e)
+					{
+						database.Update(info);
+						return info.Id;
+					}
+				}
+				else
+					return -1;
+			}
+		}
+
+		public RunningInfo getRunningInfo(int id)
+		{
+			List<RunningInfo> RunningInfoL = new List<RunningInfo>();
+			lock (locker)
+			{
+				if (database.Table<RunningInfo>().Count() == 0)
+				{
+					return null;
+				}
+				else
+				{
+					RunningInfoL = database.Query<RunningInfo>("SELECT * from RunningInfo " +
+															   "WHERE Id=" + id);
+					return RunningInfoL[0];
+				}
+
+			}
+		}
+
+		public void UpdateRunningInfo(RunningInfo info)
+		{
+			lock (locker)
+			{
+				if (database.Table<RunningInfo>().Count() == 0)
+				{
+					return;
+				}
+				else
+				{
+					database.Update(info);
+				}
+			}
+		}
+
 	}
 }

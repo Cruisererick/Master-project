@@ -15,6 +15,7 @@ using Xamarin.Forms.Maps;
 using XLabs.Forms;
 using XLabs.Ioc;
 using XLabs.Platform.Device;
+using Plugin.LocalNotifications;
 
 namespace Final_Project.Visual
 {
@@ -55,7 +56,7 @@ namespace Final_Project.Visual
 			accelerometer.Interval = AccelerometerInterval.Normal;
 		}
 
-		private async void Accelerometer_ReadingAvailable(object sender, XLabs.EventArgs<XLabs.Vector3> e)
+			private async void Accelerometer_ReadingAvailable(object sender, XLabs.EventArgs<XLabs.Vector3> e)
 		{
 				await Task.Delay(10).ContinueWith(async (arg) =>
 				{
@@ -83,6 +84,7 @@ namespace Final_Project.Visual
 									DateTime toBeClonedDateTime = DateTime.Now;
 									interrupt.start = toBeClonedDateTime;
 									bool realAnwser = false;
+
 									Device.BeginInvokeOnMainThread(
 									async () =>
 									{
@@ -148,7 +150,6 @@ namespace Final_Project.Visual
 				getlocation = false;
 				askLocation();
 			}
-			
 		}
 
 		private async void askLocation()
@@ -169,6 +170,12 @@ namespace Final_Project.Visual
 							DateTime toBeClonedDateTime = DateTime.Now;
 							interrupt.start = toBeClonedDateTime;
 							bool realAnwser = false;
+							RunningInfo info = database.getRunningInfo(1);
+							if (info.background)
+							{
+								info.notificationNeeded = true;
+								database.UpdateRunningInfo(info);
+							}
 							Device.BeginInvokeOnMainThread(
 							async () =>
 							{
@@ -197,14 +204,13 @@ namespace Final_Project.Visual
 							gettingLocation = false;
 						}
 						while (gettingLocation) ;
-						Task.Delay(60000).Wait();
+						Task.Delay(10000).Wait();
 					}
 				}
-			});
-		
-			
-			
+			});	
 		}
+
+		
 
 		public async Task<bool> GetLocation()
 		{
