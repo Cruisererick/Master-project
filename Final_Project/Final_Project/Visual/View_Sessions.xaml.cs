@@ -11,19 +11,31 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Plugin.Geolocator;
 using Xamarin.Forms.Maps;
+using System.Threading;
 
 namespace Final_Project.Visual
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class View_Sessions : ContentPage
 	{
-		List<Session> sessions;
-		Database_Controller database;
-		ObservableCollection<Session> list = new ObservableCollection<Session>();
-		Session live;
-		Interrupts interrupt;
-		bool getlocation;
-		bool gettingLocation;
+		List<Session> sessions; //List of sessions.
+		Database_Controller database; // Database
+		ObservableCollection<Session> list = new ObservableCollection<Session>(); //Observable collection of sessions, used to list session.
+		Session live;// Live Session
+		Interrupts interrupt; //Live Session
+		bool getlocation; // View session live for more details.
+		bool gettingLocation;// View session live for more details.
+		bool movement = false;// View session live for more details.
+		bool accelometeractive = false;// View session live for more details.
+		Semaphore semaphoreObject = new Semaphore(initialCount: 1, maximumCount: 1, name: "accel");// View session live for more details.
+		bool accelworking = false;// View session live for more details.
+		bool onlyOne = false;// View session live for more details.
+
+		/*
+		 * View_Sessions - Class constructor.
+		 * @param sessionsSelected - List of session to display.
+		 * @param databaseAccess - database.
+		 */
 		public View_Sessions (List<Session> sessionsSelected, Database_Controller databaseAccess)
 		{
 			sessions = sessionsSelected;
@@ -43,6 +55,10 @@ namespace Final_Project.Visual
 			
 		}
 
+
+		/*
+		 * OnAppearing - Get live session.
+		 */
 		protected override void OnAppearing()
 		{
 			Resume_Session.IsVisible = false;
@@ -55,10 +71,15 @@ namespace Final_Project.Visual
 				{
 					getlocation = true;
 					askLocation();
+					accelometeractive = true;
+					GlobalUtilities.accelerometer.ReadingAvailable += Accelerometer_ReadingAvailable;
 				}
 			}
 		}
 
+		/*
+		 * Resume_Click - Goes to session live to resume the live session.
+		 */
 		private async void Resume_Click(object sender, EventArgs e)
 		{
 			if (preventMovement())
@@ -67,13 +88,21 @@ namespace Final_Project.Visual
 			}
 		}
 
-		void OnSelection(object sender, ItemTappedEventArgs e)
+		/*
+		 * OnSelection - Goes to selected session details.
+		 */
+		async void OnSelection(object sender, ItemTappedEventArgs e)
 		{
 			if (e.Item == null)
 			{
 				return;
 			}
 			Session temp_session = (Session)e.Item;
+			if (preventMovement())
+			{
+				await Navigation.PushModalAsync(new Session_Detail(temp_session, database));
+			}
+			/*
 			List<Interrupts> interruptsList = database.GetInterruptsOfSession(temp_session.Id);
 			start.Text = temp_session.start.ToString();
 			end.Text = temp_session.end.ToString();
@@ -118,18 +147,25 @@ namespace Final_Project.Visual
 			overlay.IsVisible = true;
 			Session_List.IsVisible = false;
 			start.Focus();
+			*/
 		}
 
+		/*
+		 * OnCancelButtonClicked - Not used.
+		 */
 		void OnCancelButtonClicked(object sender, EventArgs args)
 		{
 			overlay.IsVisible = false;
 			Session_List.IsVisible = true;
 		}
 
+		/*
+		 * askLocation - View session live for more details.
+		 */
 		private async void askLocation()
 		{
-			await Task.Delay(10).ContinueWith(async (arg) => {
-				Task.Delay(10000).Wait();
+			await Task.Delay(100).ContinueWith(async (arg) => {
+				Task.Delay(GlobalUtilities.locationTime).Wait();
 				while (getlocation)
 				{
 					gettingLocation = true;
@@ -140,10 +176,17 @@ namespace Final_Project.Visual
 					{
 						getlocation = false;
 						interrupt = new Interrupts();
+						interrupt.reason = "Change location";
 						DateTime toBeClonedDateTime = DateTime.Now;
 						interrupt.start = toBeClonedDateTime;
 						var answer = Task.FromResult(false);
 						bool realAnwser = false;
+						RunningInfo info = database.getRunningInfo(1);
+						if (info.background)
+						{
+							info.notificationNeeded = true;
+							database.UpdateRunningInfo(info);
+						}
 						Device.BeginInvokeOnMainThread(
 						async () =>
 						{
@@ -165,11 +208,14 @@ namespace Final_Project.Visual
 						gettingLocation = false;
 					}
 					while (gettingLocation) ;
-					Task.Delay(10000).Wait();
+					Task.Delay(GlobalUtilities.locationTime).Wait();
 				}
 			});
 		}
 
+		/*
+		 * GetLocation - View session live for more details.
+		 */
 		public async Task<bool> GetLocation()
 		{
 			var locator = CrossGeolocator.Current;
@@ -190,6 +236,9 @@ namespace Final_Project.Visual
 			return change;
 		}
 
+		/*
+		 * OnBackButtonPressed - View session live for more details.
+		 */
 		protected override bool OnBackButtonPressed()
 		{
 			if (preventMovement())
@@ -200,16 +249,108 @@ namespace Final_Project.Visual
 			return true;
 		}
 
+		/*
+		 * Accelerometer_ReadingAvailable - View session live for more details.
+		 */
+		private async void Accelerometer_ReadingAvailable(object sender, XLabs.EventArgs<XLabs.Vector3> e)
+		{
+			await Task.Delay(100).ContinueWith(async (arg) =>
+			{
+				if (!gettingLocation)
+				{
+					if (onlyOne == false)
+					{
+						onlyOne = true;
+						semaphoreObject.WaitOne();
+						GlobalUtilities.accelerometer.ReadingAvailable -= Accelerometer_ReadingAvailable;
+
+						XLabs.Vector3 Currentreading = e.Value;
+						if (GlobalUtilities.LastMovement is null)
+						{
+							GlobalUtilities.LastMovement = Currentreading;
+						}
+						else
+						{
+							if (Math.Round(Currentreading.X, 1) != Math.Round(GlobalUtilities.LastMovement.X, 1) || Math.Round(Currentreading.Y, 1) != Math.Round(GlobalUtilities.LastMovement.Y, 1) || Math.Round(Currentreading.Z, 1) != Math.Round(GlobalUtilities.LastMovement.Z, 1))
+							{
+								GlobalUtilities.moving += 1;
+								if (GlobalUtilities.moving > GlobalUtilities.MovementTicks)
+								{
+									accelworking = true;
+									getlocation = false;
+									GlobalUtilities.moving = 0;
+									GlobalUtilities.still = 0;
+									movement = true;
+									interrupt = new Interrupts();
+									interrupt.reason = "Movement detected.";
+									DateTime toBeClonedDateTime = DateTime.Now;
+									interrupt.start = toBeClonedDateTime;
+									bool realAnwser = false;
+									RunningInfo info = database.getRunningInfo(1);
+									if (info.background)
+									{
+										info.notificationNeeded = true;
+										database.UpdateRunningInfo(info);
+									}
+									Device.BeginInvokeOnMainThread(
+									async () =>
+									{
+										realAnwser = await DisplayAlert("Movement detected", "Are you still working?", "Yes.", "No, pause.");
+										if (!realAnwser)
+										{
+											interrupt.sessionId = live.Id;
+											interrupt.Id = database.SaveInterrupt(interrupt);
+											getlocation = false;
+											accelometeractive = false;
+										}
+										else
+										{
+											getlocation = true;
+											accelometeractive = true;
+										}
+										movement = false;
+									});
+									accelworking = true;
+								}
+							}
+							else
+							{
+								GlobalUtilities.still += 1;
+								if (GlobalUtilities.still > GlobalUtilities.StillTicks)
+								{
+									GlobalUtilities.moving = 0;
+									GlobalUtilities.still = 0;
+								}
+							}
+						}
+						while (movement) ;
+						GlobalUtilities.LastMovement = Currentreading;
+						Thread.Sleep(GlobalUtilities.aceelTime);
+						if (accelometeractive)
+							GlobalUtilities.accelerometer.ReadingAvailable += Accelerometer_ReadingAvailable;
+						semaphoreObject.Release();
+						onlyOne = false;
+						accelworking = false;
+					}
+				}
+			});
+		}
+
+		/*
+		 * preventMovement - View session live for more details.
+		 */
 		public bool preventMovement()
 		{
-			if (!gettingLocation)
+			if (!gettingLocation && !accelworking)
 			{
 				getlocation = false;
+				accelometeractive = false;
+				GlobalUtilities.accelerometer.ReadingAvailable -= Accelerometer_ReadingAvailable;
 				return true;
 			}
 			else
 			{
-				DisplayAlert("Getting location", "You cath us getting your current location give us a second to finish that up", "Okey");
+				DisplayAlert("Posible Question incoming!", "You cath us getting your current location or movement give us a second to finish that up", "Okey");
 				return false;
 			}
 		}

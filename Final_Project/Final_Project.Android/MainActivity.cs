@@ -22,10 +22,14 @@ namespace Final_Project.Droid
 	public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
 	{
 		private static readonly int ButtonClickNotificationId = 1000;
-		ThreadStart myThreadDelegate;
-		Thread myThread;
-		Database_Controller database;
-		RunningInfo info;
+		ThreadStart myThreadDelegate; 
+		Thread myThread;//Thread that consult database to verify if notification is needed.
+		Database_Controller database;// Database
+		RunningInfo info;// Running info.
+
+		/*
+		 * OnCreate - Constructor for the activity.
+		 */
 		protected override void OnCreate(Bundle bundle)
 		{
 			TabLayoutResource = Resource.Layout.Tabbar;
@@ -47,11 +51,20 @@ namespace Final_Project.Droid
 			myThread.Start();
 		}
 
+		/*
+		 * OnResume - Override for onResume to store in the database when the applications resumes.
+		 */
 		protected override void OnResume()
 		{
 			base.OnResume();
+			info = database.getRunningInfo(1);
+			info.background = false;
+			database.UpdateRunningInfo(info);
 		}
 
+		/*
+		 * OnPause - Override for onPause to store in the database when the applications sleeps.
+		 */
 		protected override void OnPause()
 		{
 			base.OnPause();
@@ -74,6 +87,9 @@ namespace Final_Project.Droid
 			notificationManager.Notify(ButtonClickNotificationId, builder.Build());*/
 		}
 
+		/*
+		 * CheckNotifications - Check if a notification is needed, push the notification if needed.
+		 */
 		protected void CheckNotifications()
 		{
 			

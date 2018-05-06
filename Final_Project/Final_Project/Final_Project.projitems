@@ -19,6 +19,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Control\Database_Controller.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Control\SQL.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Control\Verfiy_Location.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\GlobalUtilities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Interrupts.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Location.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Project.cs" />
@@ -40,6 +41,10 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Visual\SessionLive.xaml.cs">
       <DependentUpon>SessionLive.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Visual\Session_Detail.xaml.cs">
+      <DependentUpon>Session_Detail.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Visual\View_Sessions.xaml.cs">
@@ -67,6 +72,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Visual\View_Sessions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Visual\Session_Detail.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

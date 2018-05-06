@@ -16,6 +16,11 @@ using Xamarin.Forms;
 
 [assembly: Dependency(typeof(SQL_Android))]
 
+/* 
+ * Method require by Xamarin and android for the proper 
+ * initialization of the database, Refer to the programmer manual for 
+ * more information. 
+ */
 namespace Final_Project.Droid
 {
 	public class SQL_Android : SQL

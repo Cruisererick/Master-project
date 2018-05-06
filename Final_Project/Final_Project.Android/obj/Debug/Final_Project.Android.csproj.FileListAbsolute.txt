@@ -23,8 +23,10 @@ D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\res\layout\tabbar.xml
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\res\layout\toolbar.xml
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\res\values\styles.xml
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\res\drawable\notti_icon.png
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\R.cs.flag
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\uploadflags.txt
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\Final_Project.Android.csprojResolveAssemblyReference.cache
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\Final_Project.Android.dll.mdb
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\FormsViewGroup.dll.mdb
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\Plugin.Geolocator.dll.mdb
@@ -45,8 +47,7 @@ D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Xamarin.Forms.Platform.Android.dll.mdb
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\Xamarin.Forms.Xaml.dll.mdb
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\android\assets\XamarinShortcutBadger.dll.mdb
-D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\Final_Project.Android.csprojResolveAssemblyReference.cache
-D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\res\drawable\notti_icon.png
+D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\obj\Debug\Final_Project.Droid.Visual.Session_Detail.xaml.g.cs
 D:\xamarin projects\Final_Project\Final_Project\Final_Project.Android\bin\Debug\Final_Project.Android.dll
 bin\Debug\FormsViewGroup.dll.mdb
 bin\Debug\Plugin.Geolocator.dll.mdb

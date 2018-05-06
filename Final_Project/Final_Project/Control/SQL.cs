@@ -5,7 +5,12 @@ using System.Text;
 
 namespace Final_Project.Control
 {
-    public interface SQL
+	/* 
+	* Interface require by Xamarin and android for the proper 
+	* initialization of the database, Refer to the programmer manual for 
+	* more information. 
+	*/
+	public interface SQL
     {
 		SQLiteConnection GetConnection();
 	}

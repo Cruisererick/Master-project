@@ -14,6 +14,61 @@
 			</ListView>
 			<Button x:Name="Resume_Session" Clicked="Resume_Click" Text="Resume Session" IsVisible="False" FontAttributes="Italic" FontSize="20" BackgroundColor="AliceBlue"></Button>
 			<Button x:Name="New_Project" Clicked="Button_Click" Text="New Project" FontAttributes="Italic" FontSize="20" BackgroundColor="AliceBlue"></Button>
+			<Button x:Name="Give_Stats" Clicked="Stats_Click" Text="Show Statistics" FontAttributes="Italic" FontSize="20" BackgroundColor="AliceBlue"></Button>
+			
+			<ContentView x:Name="overlay"
+               AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+               AbsoluteLayout.LayoutFlags="All"
+               IsVisible="False"
+               BackgroundColor="#C0808080"
+               Padding="10, 0">
+				<!-- Overlay -->
+
+				<StackLayout Orientation="Vertical"
+				 BackgroundColor="White"
+				 HeightRequest="300"
+				 WidthRequest="300"
+				 HorizontalOptions="Center"
+				 VerticalOptions="Start"
+				 Margin="0,20,0,0" >
+
+					<Label x:Name="AverageTimeProject"
+				 BackgroundColor="AliceBlue"
+				 FontSize="16"
+				 TextColor="Black"
+				 HorizontalOptions="Fill"
+				 Text="Projects Average Time: " FontAttributes="Italic"/>
+
+					<Label x:Name="ProjectPrecictionRate"
+				 BackgroundColor="AliceBlue"
+				 FontSize="16"
+				 TextColor="Black"
+				 HorizontalOptions="Fill"
+				 Text="Projects Estimation correctness: " FontAttributes="Italic"/>
+
+					<Label x:Name="AverageTimeTask"
+				 BackgroundColor="AliceBlue"
+				 FontSize="16"
+				 TextColor="Black"
+				 HorizontalOptions="Fill"
+				 Text="Task Average Time: " FontAttributes="Italic"/>
+
+					<Label x:Name="TaskPrecictionRate"
+				 BackgroundColor="AliceBlue"
+				 FontSize="16"
+				 TextColor="Black"
+				 HorizontalOptions="Fill"
+				 Text="Task Estimation correctness: " FontAttributes="Italic"/>
+
+					<StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+						<Button Text="Cancel"
+						VerticalOptions="CenterAndExpand"
+						HorizontalOptions="Center"
+						Clicked="OnCancelButtonClicked"  FontAttributes="Italic" FontSize="20" BackgroundColor="AliceBlue"/>
+
+					</StackLayout>
+				</StackLayout>
+			</ContentView>
 		</StackLayout>
 	</Grid>
 

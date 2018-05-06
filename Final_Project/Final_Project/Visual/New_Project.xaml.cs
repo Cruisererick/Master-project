@@ -11,19 +11,35 @@ using Final_Project.Model;
 using Final_Project.Control;
 using Plugin.Geolocator;
 using Xamarin.Forms.Maps;
+using System.Threading;
 
 namespace Final_Project.Visual
 {
+	/* Author: Erick Lares
+	 * This class is the screen that handles the creating of a new project, 
+	 * requiring the user to fill every field needed.
+	 */
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class New_Project : ContentPage
 	{
-		ObservableCollection<Project_Task> list = new ObservableCollection<Project_Task>();
-		Database_Controller database;
-		User currentUser;
-		Session live;
-		Interrupts interrupt;
-		bool getlocation;
-		bool gettingLocation;
+		ObservableCollection<Project_Task> list = new ObservableCollection<Project_Task>();//Observable collection of tasks, used to list tasks and allow the user to tap them and remove them form the list.
+		Database_Controller database;// The database.
+		User currentUser;// Current live user.
+		Session live;// Current live session.
+		Interrupts interrupt;// Current live interrupt.
+		bool getlocation; // View session live for more details.
+		bool gettingLocation; // View session live for more details.
+		bool movement = false; // View session live for more details.
+		bool accelometeractive = false; // View session live for more details.
+		Semaphore semaphoreObject = new Semaphore(initialCount: 1, maximumCount: 1, name: "accel"); // View session live for more details.
+		bool accelworking = false; // View session live for more details.
+		bool onlyOne = false; // View session live for more details.
+
+		/*
+		 * New_Project - Class constructor.
+		 * @param user - Live user.
+		 * @param databaseAccess - database.
+		 */
 		public New_Project (User user, Database_Controller databaseAccess)
 		{
 			database = databaseAccess;
@@ -35,6 +51,9 @@ namespace Final_Project.Visual
 			Tasks_List.ItemTapped += OnSelection;
 		}
 
+		/*
+		 * OnAppearing - Get live session.
+		 */
 		protected override void OnAppearing()
 		{
 			live = database.GetliveSession();
@@ -45,11 +64,16 @@ namespace Final_Project.Visual
 				{
 					getlocation = true;
 					askLocation();
+					accelometeractive = true;
+					GlobalUtilities.accelerometer.ReadingAvailable += Accelerometer_ReadingAvailable;
 				}
 			}
 		}
 
-			private void Button_Click(object sender, EventArgs e)
+		/*
+		 * Button_Click - Handles add a new Task.
+		 */
+		private void Button_Click(object sender, EventArgs e)
 		{
 			Name.Text = string.Empty;
 			Decription.Text = string.Empty;
@@ -62,6 +86,9 @@ namespace Final_Project.Visual
 			//list.Add("New Item");
 		}
 
+		/*
+		 * Done_Click - Save the project to the database, makes sure no field is empty.
+		 */
 		void Done_Click(object sender, EventArgs e)
 		{
 			if (preventMovement())
@@ -104,6 +131,9 @@ namespace Final_Project.Visual
 			}
 		}
 
+		/*
+		 * OnSelection - Deleted the tapped task out of the project.
+		 */
 		void OnSelection(object sender, ItemTappedEventArgs e)
 		{
 			if (e.Item == null)
@@ -115,7 +145,9 @@ namespace Final_Project.Visual
 			list.Remove(temp_task);
 		}
 
-
+		/*
+		 * OnOKButtonClicked - Add the task to the list.
+		 */
 		void OnOKButtonClicked(object sender, EventArgs args)
 		{	
 			overlay.IsVisible = false;
@@ -127,6 +159,9 @@ namespace Final_Project.Visual
 			Create_Project.IsVisible = true;
 		}
 
+		/*
+		 * OnCancelButtonClicked - Close the overlay to add tasks.
+		 */
 		void OnCancelButtonClicked(object sender, EventArgs args)
 		{
 			overlay.IsVisible = false;
@@ -135,10 +170,13 @@ namespace Final_Project.Visual
 			Create_Project.IsVisible = true;
 		}
 
+		/*
+		 * preventMovement - View session live for more details.
+		 */
 		private async void askLocation()
 		{
-			await Task.Delay(10).ContinueWith(async (arg) => {
-				Task.Delay(10000).Wait();
+			await Task.Delay(100).ContinueWith(async (arg) => {
+				Task.Delay(GlobalUtilities.locationTime).Wait();
 				while (getlocation)
 				{
 					gettingLocation = true;
@@ -149,10 +187,17 @@ namespace Final_Project.Visual
 					{
 						getlocation = false;
 						interrupt = new Interrupts();
+						interrupt.reason = "Change location";
 						DateTime toBeClonedDateTime = DateTime.Now;
 						interrupt.start = toBeClonedDateTime;
 						var answer = Task.FromResult(false);
 						bool realAnwser = false;
+						RunningInfo info = database.getRunningInfo(1);
+						if (info.background)
+						{
+							info.notificationNeeded = true;
+							database.UpdateRunningInfo(info);
+						}
 						Device.BeginInvokeOnMainThread(
 						async () =>
 						{
@@ -174,17 +219,20 @@ namespace Final_Project.Visual
 						gettingLocation = false;
 					}
 					while (gettingLocation) ;
-					Task.Delay(10000).Wait();
+					Task.Delay(GlobalUtilities.locationTime).Wait();
 				}
 			});
 		}
 
+		/*
+		 * preventMovement - View session live for more details.
+		 */
 		public async Task<bool> GetLocation()
 		{
 			var locator = CrossGeolocator.Current;
 			locator.DesiredAccuracy = 20;
 
-			var position = await locator.GetPositionAsync(TimeSpan.FromSeconds(1000), null, true);
+			var position = await locator.GetPositionAsync(TimeSpan.FromSeconds(1), null, true);
 			Geocoder geoCoder;
 			geoCoder = new Geocoder();
 
@@ -199,6 +247,9 @@ namespace Final_Project.Visual
 			return change;
 		}
 
+		/*
+		 * preventMovement - View session live for more details.
+		 */
 		protected override bool OnBackButtonPressed()
 		{
 			if (preventMovement())
@@ -209,18 +260,110 @@ namespace Final_Project.Visual
 			return true;
 		}
 
+		/*
+		 * preventMovement - View session live for more details.
+		 */
 		public bool preventMovement()
 		{
-			if (!gettingLocation)
+			if (!gettingLocation && !accelworking)
 			{
 				getlocation = false;
+				accelometeractive = false;
+				GlobalUtilities.accelerometer.ReadingAvailable -= Accelerometer_ReadingAvailable;
 				return true;
 			}
 			else
 			{
-				DisplayAlert("Getting location", "You cath us getting your current location give us a second to finish that up", "Okey");
+				DisplayAlert("Posible Question incoming!", "You cath us getting your current location or movement give us a second to finish that up", "Okey");
 				return false;
 			}
+		}
+
+		/*
+		 * preventMovement - View session live for more details.
+		 */
+		private async void Accelerometer_ReadingAvailable(object sender, XLabs.EventArgs<XLabs.Vector3> e)
+		{
+			await Task.Delay(100).ContinueWith(async (arg) =>
+			{
+				if (!gettingLocation)
+				{
+					if (onlyOne == false)
+					{
+						onlyOne = true;
+						semaphoreObject.WaitOne();
+						GlobalUtilities.accelerometer.ReadingAvailable -= Accelerometer_ReadingAvailable;
+
+						XLabs.Vector3 Currentreading = e.Value;
+						if (GlobalUtilities.LastMovement is null)
+						{
+							GlobalUtilities.LastMovement = Currentreading;
+						}
+						else
+						{
+							if (Math.Round(Currentreading.X, 1) != Math.Round(GlobalUtilities.LastMovement.X, 1) || Math.Round(Currentreading.Y, 1) != Math.Round(GlobalUtilities.LastMovement.Y, 1) || Math.Round(Currentreading.Z, 1) != Math.Round(GlobalUtilities.LastMovement.Z, 1))
+							{
+								GlobalUtilities.moving += 1;
+								if (GlobalUtilities.moving > GlobalUtilities.MovementTicks)
+								{
+									accelworking = true;
+									getlocation = false;
+									GlobalUtilities.moving = 0;
+									GlobalUtilities.still = 0;
+									movement = true;
+									interrupt = new Interrupts();
+									interrupt.reason = "Movement detected.";
+									DateTime toBeClonedDateTime = DateTime.Now;
+									interrupt.start = toBeClonedDateTime;
+									bool realAnwser = false;
+									RunningInfo info = database.getRunningInfo(1);
+									if (info.background)
+									{
+										info.notificationNeeded = true;
+										database.UpdateRunningInfo(info);
+									}
+									Device.BeginInvokeOnMainThread(
+									async () =>
+									{
+										realAnwser = await DisplayAlert("Movement detected", "Are you still working?", "Yes.", "No, pause.");
+										if (!realAnwser)
+										{
+											interrupt.sessionId = live.Id;
+											interrupt.Id = database.SaveInterrupt(interrupt);
+											getlocation = false;
+											accelometeractive = false;
+										}
+										else
+										{
+											getlocation = true;
+											accelometeractive = true;
+										}
+										movement = false;
+									});
+									accelworking = true;
+								}
+							}
+							else
+							{
+								GlobalUtilities.still += 1;
+								if (GlobalUtilities.still > GlobalUtilities.StillTicks)
+								{
+									GlobalUtilities.moving = 0;
+									GlobalUtilities.still = 0;
+								}
+							}
+						}
+						while (movement) ;
+						GlobalUtilities.LastMovement = Currentreading;
+						Thread.Sleep(GlobalUtilities.aceelTime);
+						if (accelometeractive)
+							GlobalUtilities.accelerometer.ReadingAvailable += Accelerometer_ReadingAvailable;
+						semaphoreObject.Release();
+						onlyOne = false;
+						accelworking = false;
+					}
+				}
+			});
 		}
 	}
 

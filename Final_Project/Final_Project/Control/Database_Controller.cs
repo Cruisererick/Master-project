@@ -7,17 +7,27 @@ using Xamarin.Forms;
 
 namespace Final_Project.Control
 {
+	/* Author: Erick Lares
+	 * Class that handles all connections to the database, 
+	 * including initialization of the database, creating of the tables, 
+	 * any queries require by the application. 
+	 */
     public class Database_Controller
     {
 		static object locker = new object();
 		SQLiteConnection database;
 
+		/* Database_Controller - initialization of the database.
+		 */
 		public Database_Controller()
 		{
 			database = DependencyService.Get<SQL>().GetConnection();
+			//DropTables();
 			CreateTables();
 		}
 
+		/* CreateTables - Method to create all the tables.
+		 */
 		public void CreateTables()
 		{
 			database.CreateTable<User>();
@@ -30,6 +40,8 @@ namespace Final_Project.Control
 			database.CreateTable<RunningInfo>();
 		}
 
+		/* DropTables - Method to delete all the tables.
+		 */
 		public void DropTables()
 		{
 			database.DropTable<User>();
@@ -42,6 +54,10 @@ namespace Final_Project.Control
 			database.DropTable<RunningInfo>();
 		}
 
+		/* SaveProject - Insert one project into the database.
+		 * @param project - The Project.
+		 * @return - Autoincrement Id of the project.
+		 */
 		public int SaveProject(Project project)
 		{
 			lock (locker)
@@ -68,6 +84,10 @@ namespace Final_Project.Control
 			}
 		}
 
+		/* SaveUser - Insert one user into the database.
+		 * @param SaveUser - The user.
+		 * @return - Autoincrement Id of the user.
+		 */
 		public string SaveUser(User user)
 		{
 			lock (locker)
@@ -92,6 +112,10 @@ namespace Final_Project.Control
 			}
 		}
 
+		/* SaveTask - Insert project_task into the database.
+		 * @param task - The project_task.
+		 * @return - Autoincrement Id of the Project_Task.
+		 */
 		public int SaveTask(Project_Task task)
 		{
 			lock (locker)
@@ -123,6 +147,10 @@ namespace Final_Project.Control
 			}
 		}
 
+		/* SaveSession - Insert session into the database.
+		 * @param session - The session.
+		 * @return - Autoincrement Id of the Session.
+		 */
 		public int SaveSession(Session session)
 		{
 			lock (locker)
@@ -145,6 +173,10 @@ namespace Final_Project.Control
 			}
 		}
 
+		/* SaveInterrupt - Insert interrupts into the database.
+		 * @param interrupts - The interrupts.
+		 * @return - Autoincrement Id of the Interrupts.
+		 */
 		public int SaveInterrupt(Interrupts interrupts)
 		{
 			lock (locker)
@@ -167,6 +199,10 @@ namespace Final_Project.Control
 			}
 		}
 
+		/* SaveLocation - Insert location into the database.
+		 * @param location - The location.
+		 * @return - Autoincrement Id of the Location.
+		 */
 		public int SaveLocation(Location location)
 		{
 			lock (locker)
@@ -189,6 +225,9 @@ namespace Final_Project.Control
 			}
 		}
 
+		/* GetProject - Get a list of all the project in the database.
+		 * @return - A list of projects.
+		 */
 		public List<Project> GetProject()
 		{
 			List<Project> ProjectL = new List<Project>();
@@ -207,6 +246,10 @@ namespace Final_Project.Control
 			}
 		}
 
+		/* GetOneProject - Get one project that match the id provided.
+		 * @param id - Project id.
+		 * @return - A project.
+		 */
 		public Project GetOneProject(int id)
 		{
 			List<Project> ProjectL = new List<Project>();
@@ -226,6 +269,10 @@ namespace Final_Project.Control
 			}
 		}
 
+		/* GetOneTask - Get one Project_Task that match the id provided.
+		 * @param id - Project_Task id.
+		 * @return - A Project_Task.
+		 */
 		public Project_Task GetOneTask(int id)
 		{
 			List<Project_Task> TaskL = new List<Project_Task>();
@@ -245,6 +292,11 @@ namespace Final_Project.Control
 			}
 		}
 
+		/* GetTaskOfProjects - Get all the Project_Task related to 
+		 * a specific project.
+		 * @param id - Project id.
+		 * @return - A list of Project_Task.
+		 */
 		public List<Project_Task> GetTaskOfProjects(int id)
 		{
 			List<Project_Task> ProjectL = new List<Project_Task>();
@@ -264,6 +316,11 @@ namespace Final_Project.Control
 			}
 		}
 
+		/* GetSessionsOfProjects - Get all the Session related to 
+		 * a specific project.
+		 * @param id - Project id.
+		 * @return - A list of Session.
+		 */
 		public List<Session> GetSessionsOfProjects(int id)
 		{
 			List<Session> SessionsL = new List<Session>();
@@ -283,6 +340,11 @@ namespace Final_Project.Control
 			}
 		}
 
+		/* GetSessionsOfTask - Get all the Session related to 
+		 * a specific Project_Task.
+		 * @param id - Project_Task id.
+		 * @return - A list of Session.
+		 */
 		public List<Session> GetSessionsOfTask(int id)
 		{
 			List<Session> SessionsL = new List<Session>();
@@ -302,6 +364,11 @@ namespace Final_Project.Control
 			}
 		}
 
+		/* GetLocationOfSession - Get all the locations related to 
+		 * a session.
+		 * @param id - session id.
+		 * @return - A list of Location.
+		 */
 		public List<Location> GetLocationOfSession(int id)
 		{
 			List<Location> LocationL = new List<Location>();
@@ -321,6 +388,9 @@ namespace Final_Project.Control
 			}
 		}
 
+		/* GetUser - Get the default user.
+		 * @return - Default user.
+		 */
 		public User GetUser()
 		{
 			List<User> UserL = new List<User>();
@@ -340,6 +410,11 @@ namespace Final_Project.Control
 			}
 		}
 
+		/* GetProjectUser - Get all the project of a specific 
+		 * user.
+		 * @param User - User name.
+		 * @return - A list of Project.
+		 */
 		public List<Project> GetProjectUser(string User)
 		{
 			List<Project> ProjectL = new List<Project>();
@@ -358,6 +433,9 @@ namespace Final_Project.Control
 			}
 		}
 
+		/* AddProjectToUser - Update the projects of a user.
+		 * @param user - user object that contains the projects.
+		 */
 		public void AddProjectToUser(User user)
 		{
 			lock (locker)
@@ -374,6 +452,9 @@ namespace Final_Project.Control
 			}
 		}
 
+		/* AddTaskToProject - Update the project_tasks of a project.
+		 * @param project - Project object to be updated.
+		 */
 		public void AddTaskToProject(Project project)
 		{
 			lock (locker)
@@ -390,6 +471,10 @@ namespace Final_Project.Control
 			}
 		}
 
+		/* GetliveSession - Get the session that has no end time, at all times
+		 * there can only be one session with no end time, hence a live session.
+		 * return - A live session.
+		 */
 		public Session GetliveSession()
 		{
 			List<Session> SessionL = new List<Session>();
@@ -416,6 +501,9 @@ namespace Final_Project.Control
 			}
 		}
 
+		/* UpdateSession - Update a specific session.
+		 * @param session - session to be updated.
+		 */
 		public void UpdateSession(Session session)
 		{
 			lock (locker)
@@ -431,6 +519,9 @@ namespace Final_Project.Control
 			}
 		}
 
+		/* UpdateInterrupt - Update a specific interrupt.
+		 * @param interrupt - interrupt to be updated.
+		 */
 		public void UpdateInterrupt(Interrupts interrupt)
 		{
 			lock (locker)
@@ -446,6 +537,10 @@ namespace Final_Project.Control
 			}
 		}
 
+		/* GetInterruptsOfSession - Get all the interrupts of one session.
+		 * @param sessionId - Session id.
+		 * return - A list of Interrupts.
+		 */
 		public List<Interrupts> GetInterruptsOfSession(int sessionId)
 		{
 			List<Interrupts> interruptL = new List<Interrupts>();
@@ -464,6 +559,10 @@ namespace Final_Project.Control
 			}
 		}
 
+		/* GetliveInterrupt - Get the Interrupt that has no end time, at all times
+		 * there can only be one Interrupt with no end time, hence a live Interrupt.
+		 * return - A live interrupt.
+		 */
 		public Interrupts GetliveInterrupt()
 		{
 			List<Interrupts> InterruptL = new List<Interrupts>();
@@ -490,6 +589,10 @@ namespace Final_Project.Control
 			}
 		}
 
+		/* SaveRunningInfo - Insert a RunningInfo into the database.
+		 * @param info - RunningInfo to be inserted.
+		 * return - Autoincrement Id of the RunningInfo.
+		 */
 		public int SaveRunningInfo(RunningInfo info)
 		{
 			lock (locker)
@@ -516,6 +619,10 @@ namespace Final_Project.Control
 			}
 		}
 
+		/* getRunningInfo - Get the one specific RunningInfo.
+		 * @param id - Id of the RunningInfo.
+		 * return - RunningInfo.
+		 */
 		public RunningInfo getRunningInfo(int id)
 		{
 			List<RunningInfo> RunningInfoL = new List<RunningInfo>();
@@ -535,6 +642,9 @@ namespace Final_Project.Control
 			}
 		}
 
+		/* UpdateRunningInfo - Update specific running info.
+		 * @param info - RunningInfo to be update.
+		 */
 		public void UpdateRunningInfo(RunningInfo info)
 		{
 			lock (locker)

@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Final_Project.Visual.Session_Detail">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+		</Grid.RowDefinitions>
+
+		<StackLayout Grid.Row="1">
+			<Label x:Name="Start_Time" BackgroundColor="AliceBlue"  TextColor="Black" FontSize = "25" Text="Start Time: " FontAttributes="Italic"/>
+			<Label x:Name="End_Time" BackgroundColor="AliceBlue"  TextColor="Black" FontSize = "25" Text="End Time: " FontAttributes="Italic"/>
+			<Label x:Name="Task_Name" BackgroundColor="AliceBlue"  TextColor="Black" FontSize = "25" Text="Task: " FontAttributes="Italic"/>
+			<Label x:Name="Time_Spend" BackgroundColor="AliceBlue"  TextColor="Black" FontSize = "25" Text="Time spend: " FontAttributes="Italic"/>
+			<Button x:Name="Give_Location" Clicked="Location_Cliked" Text="Locations" FontAttributes="Italic" FontSize="20" BackgroundColor="AliceBlue"></Button>
+
+		</StackLayout>
+		<StackLayout Grid.Row="2">
+			<ContentView x:Name="overlayLocation"
+               AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+               AbsoluteLayout.LayoutFlags="All"
+               IsVisible="False"
+               BackgroundColor="#C0808080"
+               Padding="10, 0">
+				<!-- Overlay -->
+
+				<StackLayout Orientation="Vertical"
+				 BackgroundColor="White"
+				 HeightRequest="300"
+				 WidthRequest="300"
+				 HorizontalOptions="Center"
+				 VerticalOptions="Start"
+				 Margin="0,20,0,0" >
+
+				<ListView x:Name="Location_List" SeparatorColor="Black" BackgroundColor="AliceBlue" RowHeight="50">
+					</ListView>
+
+
+					<StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+						<Button Text="Cancel"
+						VerticalOptions="CenterAndExpand"
+						HorizontalOptions="Center"
+						Clicked="OnCancelButtonClicked"  FontAttributes="Italic" FontSize="20" BackgroundColor="AliceBlue"/>
+
+					</StackLayout>
+
+				</StackLayout>
+			</ContentView>
+			<ListView x:Name="Interrupt_List" SeparatorColor="Black" BackgroundColor="AliceBlue" RowHeight="50">
+			</ListView>
+			<StackLayout Orientation="Horizontal"  HorizontalOptions="FillAndExpand">
+				<Button x:Name="Resume_Session" Clicked="Resume_Click" Text="Back to Session" IsVisible="False" FontAttributes="Italic" FontSize="20" BackgroundColor="AliceBlue"></Button>
+			</StackLayout>
+			<ContentView x:Name="OverlayInterrupts"
+               AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+               AbsoluteLayout.LayoutFlags="All"
+               IsVisible="False"
+               BackgroundColor="#C0808080"
+               Padding="10, 0">
+				<!-- Overlay -->
+
+				<StackLayout Orientation="Vertical"
+				 BackgroundColor="White"
+				 HeightRequest="300"
+				 WidthRequest="300"
+				 HorizontalOptions="Center"
+				 VerticalOptions="Start"
+				 Margin="0,20,0,0" >
+
+					<Label x:Name="TimeStartI"
+				 BackgroundColor="AliceBlue"
+				 FontSize="16"
+				 TextColor="Black"
+				 HorizontalOptions="Fill"
+				 Text="Start Time: " FontAttributes="Italic"/>
+
+					<Label x:Name="TimeEndI"
+				 BackgroundColor="AliceBlue"
+				 FontSize="16"
+				 TextColor="Black"
+				 HorizontalOptions="Fill"
+				 Text="End Time: " FontAttributes="Italic"/>
+
+					<Label x:Name="ReasonI"
+				 BackgroundColor="AliceBlue"
+				 FontSize="16"
+				 TextColor="Black"
+				 HorizontalOptions="Fill"
+				 Text="Reason: " FontAttributes="Italic"/>
+
+					<StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+						<Button Text="Cancel"
+						VerticalOptions="CenterAndExpand"
+						HorizontalOptions="Center"
+						Clicked="OnCancelButtonClicked2"  FontAttributes="Italic" FontSize="20" BackgroundColor="AliceBlue"/>
+
+					</StackLayout>
+				</StackLayout>
+			</ContentView>
+		</StackLayout>
+	</Grid>
+</ContentPage>

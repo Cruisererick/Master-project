@@ -11,6 +11,9 @@ using Final_Project.Control;
 using System.Collections.ObjectModel;
 using Plugin.Geolocator;
 using Xamarin.Forms.Maps;
+using XLabs.Platform.Device;
+using System.Threading;
+using XLabs.Ioc;
 
 namespace Final_Project.Visual
 {
@@ -18,14 +21,26 @@ namespace Final_Project.Visual
 	public partial class Project_View_Page : ContentPage
 	{
 		Project selectedProject;
-		Project_Task tapped;
-		Database_Controller database;
-		ObservableCollection<Project_Task> list = new ObservableCollection<Project_Task>();
-		bool LiveSession = false;
-		Session live;
-		bool getlocation;
-		bool gettingLocation;
-		Interrupts interrupt;
+		Project_Task tapped;// Tapped task.
+		Database_Controller database; //Database
+		ObservableCollection<Project_Task> list = new ObservableCollection<Project_Task>(); //Observable collection of tasks, used to list tasks.
+		bool LiveSession = false; //live session boolean.
+		Session live;// Live session
+		bool getlocation;// View session live for more details.
+		bool gettingLocation;// View session live for more details.
+		Interrupts interrupt;// View session live for more details.
+		bool movement = false;// View session live for more details.
+		bool accelometeractive = false;// View session live for more details.
+		Semaphore semaphoreObject = new Semaphore(initialCount: 1, maximumCount: 1, name: "accel");// View session live for more details.
+		bool accelworking = false;// View session live for more details.
+		bool onlyOne = false;// View session live for more details.
+
+
+		/*
+		 * Project_View_Page - Class constructor.
+		 * @param project - Selected project.
+		 * @param databaseAccess - database.
+		 */
 		public Project_View_Page (Project project, Database_Controller databaseAccess)
 		{
 			selectedProject = project;
@@ -51,6 +66,10 @@ namespace Final_Project.Visual
 			Tasks_List.ItemTapped += OnSelection;
 		}
 
+
+		/*
+		 * OnAppearing - Get live session, calculates the engage time and estimation time for the project.
+		 */
 		protected override void OnAppearing()
 		{
 			overlay.IsVisible = false;
@@ -63,8 +82,8 @@ namespace Final_Project.Visual
 			Engage_Time.Text = "Time spend: ";
 			double auxEstimation = GetEstimation(selectedProject);
 			double auxSpend = GetEngageTime(selectedProject);
-			Estimation_Time.Text += Math.Round(auxEstimation, 3).ToString();
-			Engage_Time.Text += Math.Round(auxSpend, 3).ToString();
+			Estimation_Time.Text += TimeSpan.FromMinutes(Math.Round(auxEstimation, 3)).ToString();
+			Engage_Time.Text += TimeSpan.FromMinutes(Math.Round(auxSpend, 3)).ToString();
 			if (auxEstimation < auxSpend)
 			{
 				Engage_Time.BackgroundColor = Color.Red;
@@ -82,6 +101,8 @@ namespace Final_Project.Visual
 				{
 					getlocation = true;
 					askLocation();
+					accelometeractive = true;
+					GlobalUtilities.accelerometer.ReadingAvailable += Accelerometer_ReadingAvailable;
 				}
 			}
 			else
@@ -91,6 +112,9 @@ namespace Final_Project.Visual
 			}
 		}
 
+		/*
+		 * OnSelection - Method that display the information of the selected task.
+		 */
 		void OnSelection(object sender, ItemTappedEventArgs e)
 		{
 			if (e.Item == null)
@@ -101,10 +125,30 @@ namespace Final_Project.Visual
 			Name.Text = "Name: ";
 			Decription.Text = "Description: ";
 			Estimation.Text = "Estimation: ";
+			temp_task.sessions = database.GetSessionsOfTask(temp_task.Id);
+			double timeSP;
+			if (temp_task.sessions != null)
+			{
+				timeSP = GetTaskEngageTime(temp_task.sessions);
+				TimeSpendTask.Text = "Time Spend: " + TimeSpan.FromMinutes(Math.Round(timeSP, 3)).ToString();
+			}
+			else
+			{
+				timeSP = 0;
+			}
+
 			Name.Text += temp_task.name;
 			Decription.Text += temp_task.description;
-			Estimation.Text += temp_task.estimation.ToString();
+			Estimation.Text += TimeSpan.FromMinutes(temp_task.estimation).ToString();
 			tapped = temp_task;
+			if (temp_task.estimation < timeSP)
+			{
+				TimeSpendTask.BackgroundColor = Color.Red;
+			}
+			else
+			{
+				TimeSpendTask.BackgroundColor = Color.Green;
+			}
 			overlay.IsVisible = true;
 			Tasks_List.IsVisible = false;
 			View_Sessions.IsVisible = false;
@@ -112,6 +156,9 @@ namespace Final_Project.Visual
 			Name.Focus();
 		}
 
+		/*
+		 * NewSessionButtonClicked - Method that handles a new session for a task.
+		 */
 		private async void NewSessionButtonClicked(object sender, EventArgs args)
 		{
 			if (LiveSession == false)
@@ -127,6 +174,9 @@ namespace Final_Project.Visual
 			}
 		}
 
+		/*
+		 * OnCancelButtonClicked - Method that cancels the information displayed for a task.
+		 */
 		void OnCancelButtonClicked(object sender, EventArgs args)
 		{
 			overlay.IsVisible = false;
@@ -136,6 +186,9 @@ namespace Final_Project.Visual
 			tapped = null;
 		}
 
+		/*
+		 * Resume_Click - Goes to session live to resume the live session.
+		 */
 		private async void Resume_Click(object sender, EventArgs e)
 		{
 			if (preventMovement())
@@ -144,6 +197,9 @@ namespace Final_Project.Visual
 			}
 		}
 
+		/*
+		 * ViewSessionsClick - view all session that belong to the project.
+		 */
 		private async void ViewSessionsClick(object sender, EventArgs e)
 		{
 			if (preventMovement())
@@ -153,6 +209,9 @@ namespace Final_Project.Visual
 			}
 		}
 
+		/*
+		 * ViewTaskSessionsClick - view all session that belong to a task.
+		 */
 		private async void ViewTaskSessionsClick(object sender, EventArgs e)
 		{
 			if (preventMovement())
@@ -162,6 +221,11 @@ namespace Final_Project.Visual
 			}
 		}
 
+		/*
+		 * GetEstimation - Method that calculate the estimation time for the entire project,
+		 * based on the tasks.
+		 * @param project - The project
+		 */
 		double GetEstimation(Project project)
 		{
 			double minutes = 0;
@@ -172,6 +236,11 @@ namespace Final_Project.Visual
 			return minutes;
 		}
 
+		/*
+		 * GetEngageTime - Method that calculate the spend time for the entire project,
+		 * based on the sessions.
+		 * @param project - The project
+		 */
 		double GetEngageTime(Project project)
 		{
 			double minutes = 0;
@@ -219,10 +288,100 @@ namespace Final_Project.Visual
 			return minutes;
 		}
 
+		/*
+		 * Accelerometer_ReadingAvailable - View session live for more details.
+		 */
+		private async void Accelerometer_ReadingAvailable(object sender, XLabs.EventArgs<XLabs.Vector3> e)
+		{
+			await Task.Delay(100).ContinueWith(async (arg) =>
+			{
+				if (!gettingLocation)
+				{
+					if (onlyOne == false)
+					{
+						onlyOne = true;
+						semaphoreObject.WaitOne();
+						GlobalUtilities.accelerometer.ReadingAvailable -= Accelerometer_ReadingAvailable;
+
+						XLabs.Vector3 Currentreading = e.Value;
+						if (GlobalUtilities.LastMovement is null)
+						{
+							GlobalUtilities.LastMovement = Currentreading;
+						}
+						else
+						{
+							if (Math.Round(Currentreading.X, 1) != Math.Round(GlobalUtilities.LastMovement.X, 1) || Math.Round(Currentreading.Y, 1) != Math.Round(GlobalUtilities.LastMovement.Y, 1) || Math.Round(Currentreading.Z, 1) != Math.Round(GlobalUtilities.LastMovement.Z, 1))
+							{
+								GlobalUtilities.moving += 1;
+								if (GlobalUtilities.moving > GlobalUtilities.MovementTicks)
+								{
+									accelworking = true;
+									getlocation = false;
+									GlobalUtilities.moving = 0;
+									GlobalUtilities.still = 0;
+									movement = true;
+									interrupt = new Interrupts();
+									interrupt.reason = "Movement detected.";
+									DateTime toBeClonedDateTime = DateTime.Now;
+									interrupt.start = toBeClonedDateTime;
+									bool realAnwser = false;
+									RunningInfo info = database.getRunningInfo(1);
+									if (info.background)
+									{
+										info.notificationNeeded = true;
+										database.UpdateRunningInfo(info);
+									}
+									Device.BeginInvokeOnMainThread(
+									async () =>
+									{
+										realAnwser = await DisplayAlert("Movement detected", "Are you still working?", "Yes.", "No, pause.");
+										if (!realAnwser)
+										{
+											interrupt.sessionId = live.Id;
+											interrupt.Id = database.SaveInterrupt(interrupt);
+											getlocation = false;
+											accelometeractive = false;
+										}
+										else
+										{
+											getlocation = true;
+											accelometeractive = true;
+										}
+										movement = false;
+									});
+									accelworking = true;
+								}
+							}
+							else
+							{
+								GlobalUtilities.still += 1;
+								if (GlobalUtilities.still > GlobalUtilities.StillTicks)
+								{
+									GlobalUtilities.moving = 0;
+									GlobalUtilities.still = 0;
+								}
+							}
+						}
+						while (movement) ;
+						GlobalUtilities.LastMovement = Currentreading;
+						Thread.Sleep(GlobalUtilities.aceelTime);
+						if (accelometeractive)
+							GlobalUtilities.accelerometer.ReadingAvailable += Accelerometer_ReadingAvailable;
+						semaphoreObject.Release();
+						onlyOne = false;
+						accelworking = false;
+					}
+				}
+			});
+		}
+
+		/*
+		 * askLocation - View session live for more details.
+		 */
 		private async void askLocation()
 		{
-			await Task.Delay(10).ContinueWith(async (arg) => {
-				Task.Delay(10000).Wait();
+			await Task.Delay(100).ContinueWith(async (arg) => {
+				Task.Delay(GlobalUtilities.locationTime).Wait();
 				while (getlocation)
 				{
 					gettingLocation = true;
@@ -233,10 +392,17 @@ namespace Final_Project.Visual
 					{
 						getlocation = false;
 						interrupt = new Interrupts();
+						interrupt.reason = "Change location";
 						DateTime toBeClonedDateTime = DateTime.Now;
 						interrupt.start = toBeClonedDateTime;
 						var answer = Task.FromResult(false);
 						bool realAnwser = false;
+						RunningInfo info = database.getRunningInfo(1);
+						if (info.background)
+						{
+							info.notificationNeeded = true;
+							database.UpdateRunningInfo(info);
+						}
 						Device.BeginInvokeOnMainThread(
 						async () =>
 						{
@@ -258,17 +424,20 @@ namespace Final_Project.Visual
 						gettingLocation = false;
 					}
 					while (gettingLocation) ;
-					Task.Delay(10000).Wait();
+					Task.Delay(GlobalUtilities.locationTime).Wait();
 				}
 			});
 		}
 
+		/*
+		 * GetLocation - View session live for more details.
+		 */
 		public async Task<bool> GetLocation()
 		{
 			var locator = CrossGeolocator.Current;
 			locator.DesiredAccuracy = 20;
 
-			var position = await locator.GetPositionAsync(TimeSpan.FromSeconds(1000), null, true);
+			var position = await locator.GetPositionAsync(TimeSpan.FromSeconds(1), null, true);
 			Geocoder geoCoder;
 			geoCoder = new Geocoder();
 
@@ -283,6 +452,9 @@ namespace Final_Project.Visual
 			return change;
 		}
 
+		/*
+		 * OnBackButtonPressed - View session live for more details.
+		 */
 		protected override bool OnBackButtonPressed()
 		{
 			if (preventMovement())
@@ -293,16 +465,112 @@ namespace Final_Project.Visual
 			return true;
 		}
 
+		/*
+		* Stats_Click - View stats for that particular project.
+		*/
+		private async void Stats_Click(object sender, EventArgs e)
+		{
+			overlayStats.IsVisible = true;
+			TimeSpan ATT = TimeSpan.Zero;
+			Double TPR = 0;
+			TimeSpan auxPPR = TimeSpan.Zero;
+			TimeSpan auxATP = TimeSpan.Zero;
+			TimeSpan auxATT = TimeSpan.Zero;
+			TimeSpan auxTPR = TimeSpan.Zero;
+
+			auxATT = Project.AverageOfTasks(selectedProject, database);
+			ATT += auxATT;
+			auxTPR = Project.GetEstimation(selectedProject, database);
+
+			if (auxATT.TotalMinutes != 0 && auxTPR.TotalMinutes != 0)
+			{
+				if (auxATT < auxTPR)
+				{
+					TPR += Math.Round((auxATT.TotalMinutes / auxTPR.TotalMinutes) * 100, 1);
+				}
+				else
+				{
+					TPR += Math.Round((auxTPR.TotalMinutes / auxATT.TotalMinutes) * 100, 1);
+				}
+			}
+
+			ATT = TimeSpan.FromMinutes(ATT.TotalMinutes);
+			AverageTimeTask.Text = "Task Average Time: " + ATT.ToString();
+			TaskPrecictionRate.Text = "Task Estimation correctness: " + TPR.ToString() + "%";
+		}
+
+		/*
+		* OnCancelButtonClicked2 - Close stats overlay.
+		*/
+		void OnCancelButtonClicked2(object sender, EventArgs args)
+		{
+			overlayStats.IsVisible = false;
+		}
+
+		/*
+		* GetTaskEngageTime - Calculate time spend on a particular task based on it sessions.
+		*/
+		double GetTaskEngageTime(List<Session> sessionsL)
+		{
+			double minutes = 0;
+			TimeSpan difference;
+			foreach (var tempS in sessionsL)
+			{
+				try
+				{
+					double lessTime = 0;
+					List<Interrupts> interruptsList = database.GetInterruptsOfSession(tempS.Id);
+					foreach (var interrupt in interruptsList)
+					{
+						try
+						{
+							if (interrupt.end is null)
+							{
+								lessTime += 0;
+							}
+							else
+							{
+								lessTime += ((double)((TimeSpan)(interrupt.end - interrupt.start)).TotalMinutes);
+							}
+						}
+						catch
+						{
+							lessTime += 0;
+						}
+					}
+					if (tempS.end is null)
+					{
+						minutes += 0;
+					}
+					else
+					{
+						difference = (TimeSpan)(tempS.end - tempS.start);
+						minutes += ((double)difference.TotalMinutes) - lessTime;
+					}
+				}
+				catch
+				{
+					minutes += 0;
+				}
+			}
+			return minutes;
+		}
+
+		/*
+		 * preventMovement - View session live for more details.
+		 */
 		public bool preventMovement()
 		{
-			if (!gettingLocation)
+			if (!gettingLocation && !accelworking)
 			{
 				getlocation = false;
+				accelometeractive = false;
+				GlobalUtilities.accelerometer.ReadingAvailable -= Accelerometer_ReadingAvailable;
 				return true;
 			}
 			else
 			{
-				DisplayAlert("Getting location", "You cath us getting your current location give us a second to finish that up", "Okey");
+				DisplayAlert("Posible Question incoming!", "You cath us getting your current location or movement give us a second to finish that up", "Okey");
 				return false;
 			}
 		}

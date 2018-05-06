@@ -19,24 +19,33 @@ using Plugin.LocalNotifications;
 
 namespace Final_Project.Visual
 {
+	/* Author: Erick Lares
+	 * This class is the responsible of handling everything that 
+	 * happens when a new session is started as well as giving the 
+	 * user the information they need about the live session.
+	 */
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class SessionLive : ContentPage
 	{
 		Project selected_project;
-		Project_Task selected_task;
+		Project_Task selected_task; 
 		Database_Controller database;
 		Session current;
 		Interrupts interrupt;
-		bool gettingLocation = false;
-		bool getlocation = false;
-		IAccelerometer accelerometer;
-		XLabs.Vector3 LastMovement;
-		bool movement = false;
-		int still = 0;
-		int moving = 0;
-		bool accelometeractive = false;
-		Semaphore semaphoreObject = new Semaphore(initialCount: 1, maximumCount: 1, name: "accel");
+		bool gettingLocation = false; //Bool that indicates if the GPS is in used.
+		bool getlocation = false; //Bool that allow the use of the GPS.
+		bool movement = false; //Bool that indicate if move was detected.
+		bool accelometeractive = false; //Bool that indicate if the accelerometer is active.
+		bool accelworking = false; //Bool that indicates that a posible notifications could come from the accelerometer.
+		bool onlyOne = false; //Bool to allow only one reading of the accelerometer.
+		Semaphore semaphoreObject = new Semaphore(initialCount: 1, maximumCount: 1, name: "accel");  //semaphore to allow only one reading of the accelerometer.
 
+		/*
+		 * SessionLive - Initialize the Content view and its components.
+		 * @param project - The project that own the task and the session.
+		 * @param task - The task that own the session.
+		 * @param databaseAccess - The database.
+		 */
 		public SessionLive (Project project, Project_Task task, Database_Controller databaseAccess)
 		{
 			InitializeComponent ();
@@ -45,90 +54,152 @@ namespace Final_Project.Visual
 			selected_project = project;
 			selected_task = task;
 			database = databaseAccess;
-			Timer_Counter.Text = "Session is not live";
-			if (!Resolver.IsSet)
-			{
-				var container = new SimpleContainer();
-				container.Register<IAccelerometer, Accelerometer>();
-				Resolver.SetResolver(container.GetResolver());
-			}
-			accelerometer = Resolver.Resolve<IAccelerometer>();
-			accelerometer.Interval = AccelerometerInterval.Normal;
+			//Timer_Counter.Text = "Session is not live";
 		}
 
-			private async void Accelerometer_ReadingAvailable(object sender, XLabs.EventArgs<XLabs.Vector3> e)
+		/* RefreshTime - Method that refresh in real time the timer of the session,
+		 * the method takes the initial time of the session and subtrack the current time of
+		 * the system, taking in account all the interrupts of the session.
+		 */
+		public async void RefreshTime()
 		{
-				await Task.Delay(10).ContinueWith(async (arg) =>
+			await Task.Delay(100).ContinueWith(async (arg) =>
+			{
+				while (true)
 				{
-					if (!gettingLocation)
+					List<Interrupts> interrruptL = database.GetInterruptsOfSession(current.Id);
+					TimeSpan difference = (TimeSpan)(DateTime.Now - current.start);
+					double extra = 0;
+					foreach (var temp in interrruptL)
 					{
-						semaphoreObject.WaitOne();
-						accelerometer.ReadingAvailable -= Accelerometer_ReadingAvailable;
-						XLabs.Vector3 Currentreading = e.Value;
-						if (LastMovement is null)
+						if (temp.end != null)
 						{
-							LastMovement = Currentreading;
+							extra += ((TimeSpan)(temp.end - temp.start)).TotalMinutes;
 						}
 						else
 						{
-							if (Math.Round(Currentreading.X,1) != Math.Round(LastMovement.X,1) || Math.Round(Currentreading.Y,1) != Math.Round(LastMovement.Y,1) || Math.Round(Currentreading.Z,1) != Math.Round(LastMovement.Z,1))
-							{
-								moving += 1;
-								if (moving > 5)
-								{
-									getlocation = false;
-									moving = 0;
-									still = 0;
-									movement = true;
-									interrupt = new Interrupts();
-									DateTime toBeClonedDateTime = DateTime.Now;
-									interrupt.start = toBeClonedDateTime;
-									bool realAnwser = false;
+							extra += ((TimeSpan)(DateTime.Now - temp.start)).TotalMinutes;
+						}
+					}
+					double total = difference.TotalMinutes;
+					total = total - extra;
+					Device.BeginInvokeOnMainThread(async () =>
+					{
+						Timer_Counter.Text = TimeSpan.FromMinutes(total).ToString();
+					});
+				}
+			});
+		}
 
-									Device.BeginInvokeOnMainThread(
-									async () =>
-									{
-										realAnwser = await DisplayAlert("Movement detected", "Are you still working?", "Yes.", "No, pause.");
-										if (!realAnwser)
-										{
-											interrupt.sessionId = current.Id;
-											interrupt.Id = database.SaveInterrupt(interrupt);
-											getlocation = false;
-											Timer_Counter.Text = "Session is paused";
-											Start.Text = "Resume";
-											accelometeractive = false;
-										}
-										else
-										{
-											getlocation = true;
-											accelometeractive = true;
-										}
-										movement = false;
-									});
-								}
+		/* Accelerometer_ReadingAvailable - Method that pools data from the accelerometer, this method creates a new system task, so the user interface remains responsive. 
+		 * If the GPS is being used the accelerometer must wait until this is done so the user doesn’t get two notifications at the same time.
+		 * Only one reading is allowed at one time, a semaphore and preventing more reading by taking out the event are used to enforce this.
+		 * If it’s the first reading the method does nothing.
+		 * The method compares the previous reading to the new one to detect movement.
+		 * If change is detected the movement buffer increases.
+		 * If no movement is detected the still buffer increases.
+		 * If the movement buffer gets to it limit an alert will be fire indicating that movement was detected, the user need to handle this alert.
+		 * If the still buffer gets to it limit the movement buffer will reset.
+		 * Still buffer and movement Buffer are used to discard and control accelerometer inaccuracy’s.
+		 * If a notification is fire an interrupt will be created if the user stops the session the interrupt will be place in the database else, it will be ignored.
+		 * If the application is in background and movement is detected a notification will be requested to android OS.
+		 * While a reading is being done the user cannot leave this screen.
+		 * A thread sleep is used to prevent the application to overflow the method with readings.
+		 */
+		private async void Accelerometer_ReadingAvailable(object sender, XLabs.EventArgs<XLabs.Vector3> e)
+		{
+			await Task.Delay(100).ContinueWith(async (arg) =>
+				{
+					if (!gettingLocation)
+					{
+						if (onlyOne == false)
+						{
+							onlyOne = true;
+							semaphoreObject.WaitOne();
+							GlobalUtilities.accelerometer.ReadingAvailable -= Accelerometer_ReadingAvailable;
+
+							XLabs.Vector3 Currentreading = e.Value;
+							if (GlobalUtilities.LastMovement is null)
+							{
+								GlobalUtilities.LastMovement = Currentreading;
 							}
 							else
 							{
-								still += 1;
-								if (still > 5)
+								if (Math.Round(Currentreading.X, 1) != Math.Round(GlobalUtilities.LastMovement.X, 1) || Math.Round(Currentreading.Y, 1) != Math.Round(GlobalUtilities.LastMovement.Y, 1) || Math.Round(Currentreading.Z, 1) != Math.Round(GlobalUtilities.LastMovement.Z, 1))
 								{
-									moving = 0;
-									still = 0;
+									GlobalUtilities.moving += 1;
+									if (GlobalUtilities.moving > GlobalUtilities.MovementTicks)
+									{
+										accelworking = true;
+										getlocation = false;
+										GlobalUtilities.moving = 0;
+										GlobalUtilities.still = 0;
+										movement = true;
+										interrupt = new Interrupts();
+										interrupt.reason = "Movement detected.";
+										DateTime toBeClonedDateTime = DateTime.Now;
+										interrupt.start = toBeClonedDateTime;
+										bool realAnwser = false;
+										RunningInfo info = database.getRunningInfo(1);
+										if (info.background)
+										{
+											info.notificationNeeded = true;
+											database.UpdateRunningInfo(info);
+										}
+										Device.BeginInvokeOnMainThread(
+										async () =>
+										{
+											realAnwser = await DisplayAlert("Movement detected", "Are you still working?", "Yes.", "No, pause.");
+											if (!realAnwser)
+											{
+												interrupt.sessionId = current.Id;
+												interrupt.Id = database.SaveInterrupt(interrupt);
+												getlocation = false;
+												//Timer_Counter.Text = "Session is paused";
+												Start.Text = "Resume";
+												accelometeractive = false;
+											}
+											else
+											{
+												getlocation = true;
+												accelometeractive = true;
+											}
+											movement = false;
+										});
+										accelworking = true;
+									}
+								}
+								else
+								{
+									GlobalUtilities.still += 1;
+									if (GlobalUtilities.still > GlobalUtilities.StillTicks)
+									{
+										GlobalUtilities.moving = 0;
+										GlobalUtilities.still = 0;
+									}
 								}
 							}
+							while (movement) ;
+							GlobalUtilities.LastMovement = Currentreading;
+							Thread.Sleep(GlobalUtilities.aceelTime);
+							if (accelometeractive)
+								GlobalUtilities.accelerometer.ReadingAvailable += Accelerometer_ReadingAvailable;
+							semaphoreObject.Release();
+							onlyOne = false;
+							accelworking = false;
 						}
-						while (movement) ;
-						LastMovement = Currentreading;
-						Thread.Sleep(1333);
-						if(accelometeractive)
-							accelerometer.ReadingAvailable += Accelerometer_ReadingAvailable;
-						semaphoreObject.Release();
 					}
 				});
 		}
+
+		/*
+		 * SessionLive - Initialize the Content view when a session is being resume.
+		 * @param databaseAccess - The database.
+		 */
 		public SessionLive(Database_Controller databaseAccess)
 		{
 			InitializeComponent();
+			RefreshTime();
 			database = databaseAccess;
 			current = database.GetliveSession();
 			selected_project = database.GetOneProject(current.project);
@@ -136,22 +207,47 @@ namespace Final_Project.Visual
 			this.Task_Name.Text = selected_task.name;
 			this.Project_Name.Text = selected_project.name;
 			interrupt = database.GetliveInterrupt();
+			if (!Resolver.IsSet)
+			{
+				var container = new SimpleContainer();
+				container.Register<IAccelerometer, Accelerometer>();
+				Resolver.SetResolver(container.GetResolver());
+			}
+			GlobalUtilities.accelerometer = Resolver.Resolve<IAccelerometer>();
+			GlobalUtilities.accelerometer.Interval = AccelerometerInterval.Normal;
 			if (interrupt is null)
 			{
 				Start.Text = "Pause";
-				Timer_Counter.Text = "Session is live";
 				getlocation = true;
 				askLocation();
+				accelometeractive = true;
+				GlobalUtilities.accelerometer.ReadingAvailable += Accelerometer_ReadingAvailable;
 			}
 			else
 			{
 				Start.Text = "Resume";
-				Timer_Counter.Text = "Session is not live";
 				getlocation = false;
 				askLocation();
 			}
 		}
 
+		/*
+		 * askLocation - Method that handles the location change,
+		 * an infinite looping thread is created, a Boolean is used to 
+		 * allow the reading of the GPS, once inside the method 
+		 * a second Boolean signal every other method that GPS is 
+		 * taking a reading, while the reading is been done the accelerometer  
+		 * is blocked, also the user cannot leave this screen.
+		 * 
+		 * Once the location is obtained the method check is a change occurred, 
+		 * if this was the case an alert will pop up stating that location 
+		 * change was detected, and the user need to resolve this, an interrupt 
+		 * will be created but it will only be stored in the database if the user
+		 * agrees that the change in location was an interrupt to their work else, 
+		 * it will be discarded.
+		 * If the application is in background a request to the OS will be made 
+		 * to push a notification outside the application.
+		*/
 		private async void askLocation()
 		{
 			await Task.Delay(10).ContinueWith(async (arg) => {
@@ -167,6 +263,7 @@ namespace Final_Project.Visual
 						{
 							getlocation = false;
 							interrupt = new Interrupts();
+							interrupt.reason = "Change Location";
 							DateTime toBeClonedDateTime = DateTime.Now;
 							interrupt.start = toBeClonedDateTime;
 							bool realAnwser = false;
@@ -185,12 +282,12 @@ namespace Final_Project.Visual
 									interrupt.sessionId = current.Id;
 									interrupt.Id = database.SaveInterrupt(interrupt);
 									getlocation = false;
-									Timer_Counter.Text = "Session is paused";
+									//Timer_Counter.Text = "Session is paused";
 									Start.Text = "Resume";
 									accelometeractive = false;
-									accelerometer.ReadingAvailable -= Accelerometer_ReadingAvailable;
-									moving = 0;
-									still = 0;
+									GlobalUtilities.accelerometer.ReadingAvailable -= Accelerometer_ReadingAvailable;
+									GlobalUtilities.moving = 0;
+									GlobalUtilities.still = 0;
 								}
 								else
 								{
@@ -204,20 +301,22 @@ namespace Final_Project.Visual
 							gettingLocation = false;
 						}
 						while (gettingLocation) ;
-						Task.Delay(10000).Wait();
+						Task.Delay(GlobalUtilities.locationTime).Wait();
 					}
 				}
 			});	
 		}
 
-		
-
+		/*
+		 * GetLocation - Method that uses Geolocator and xamarin maps to 
+		 * get the current geological information of the device.
+		 */
 		public async Task<bool> GetLocation()
 		{
 			var locator = CrossGeolocator.Current;
 			locator.DesiredAccuracy = 20;
 
-			var position = await locator.GetPositionAsync(TimeSpan.FromSeconds(1000), null, true);
+			var position = await locator.GetPositionAsync(TimeSpan.FromSeconds(100), null, true);
 			Geocoder geoCoder;
 			geoCoder = new Geocoder();
 
@@ -232,6 +331,9 @@ namespace Final_Project.Visual
 			return change;
 		}
 
+		/*
+		 * StartButtonClicked - Method that start, pauses and resumes a session.
+		 */
 		void StartButtonClicked(object sender, EventArgs args)
 		{
 			if (Start.Text.CompareTo("Start") == 0)
@@ -250,19 +352,21 @@ namespace Final_Project.Visual
 				Start.Text = "Pause";
 				getlocation = true;
 				askLocation();
-				Timer_Counter.Text = "Session is live";
+				//Timer_Counter.Text = "Session is live";
 				accelometeractive = true;
-				accelerometer.ReadingAvailable += Accelerometer_ReadingAvailable;
+				GlobalUtilities.accelerometer.ReadingAvailable += Accelerometer_ReadingAvailable;
+				RefreshTime();
 			}
 			else if (Start.Text.CompareTo("Pause") == 0)
 			{
 				accelometeractive = false;
-				accelerometer.ReadingAvailable -= Accelerometer_ReadingAvailable;
+				GlobalUtilities.accelerometer.ReadingAvailable -= Accelerometer_ReadingAvailable;
 				getlocation = false;
 				Start.Text = "Resume";
 				if (database.GetliveInterrupt() is null)
 				{
 					interrupt = new Interrupts();
+					interrupt.reason = "User reason";
 					DateTime toBeClonedDateTime = DateTime.Now;
 					interrupt.start = toBeClonedDateTime;
 					interrupt.sessionId = current.Id;
@@ -282,11 +386,14 @@ namespace Final_Project.Visual
 				getlocation = true;
 				Timer_Counter.Text = "Session is live";
 				accelometeractive = true;
-				accelerometer.ReadingAvailable += Accelerometer_ReadingAvailable;
+				GlobalUtilities.accelerometer.ReadingAvailable += Accelerometer_ReadingAvailable;
 			}
 
 		}
 
+		/*
+		 * PauseButtonClicked - Stops a session.
+		 */
 		void PauseButtonClicked(object sender, EventArgs args)
 		{
 			if (preventMovement())
@@ -305,6 +412,10 @@ namespace Final_Project.Visual
 			}
 		}
 
+		/*
+		 * OnBackButtonPressed - Overwrite on the back button press,
+		 * the overwrite is done so the back button has to check if its allow to leave the screen.
+		 */
 		protected override bool OnBackButtonPressed()
 		{
 			if (preventMovement())
@@ -315,16 +426,22 @@ namespace Final_Project.Visual
 			return true;
 		}
 
+		/*
+		 * preventMovement - Method that prevents the user from leaving the screen, this is 
+		 * done so sensitives method finish so important information is not lost.
+		 */
 		public bool preventMovement()
 		{
-			if (!gettingLocation)
+			if (!gettingLocation && !accelworking)
 			{
 				getlocation = false;
+				accelometeractive = false;
+				GlobalUtilities.accelerometer.ReadingAvailable -= Accelerometer_ReadingAvailable;
 				return true;
 			}
 			else
 			{
-				DisplayAlert("Getting location", "You cath us getting your current location give us a second to finish that up", "Okey");
+				DisplayAlert("Posible Question incoming!", "You cath us getting your current location or movement give us a second to finish that up", "Okey");
 				return false;
 			}
 		}
